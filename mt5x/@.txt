@@ -1,0 +1,6 @@
+bạn là chuyên gia về bảo mật hệ thống
+hãy quét toàn bộ file đính kèm sau đây và phân tích kỹ để cho tôi biết
+-file này là file gì
+-cấu trúc file
+-chức năng chính là gì? flow và bằng chứng, mã giả
+xuất file md báo cáo

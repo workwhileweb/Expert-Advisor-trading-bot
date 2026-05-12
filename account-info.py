@@ -2,27 +2,27 @@ import MetaTrader5 as mt5
 import sys
 from datetime import datetime
 
+from i18n import t
+
+
 def get_detailed_account_info():
     """
     Get comprehensive account information with error handling
-    
+
     Returns:
         dict: Account information or None if failed
     """
     try:
-        # Initialize if not already done
         if not mt5.initialize():
-            print(f"Failed to initialize MetaTrader 5: {mt5.last_error()}")
+            print(t("account_init_failed", err=mt5.last_error()))
             return None
-        
-        # Get account information
+
         account_info = mt5.account_info()
         if account_info is None:
-            print("Failed to get account information")
-            print(f"Last error: {mt5.last_error()}")
+            print(t("account_get_failed"))
+            print(t("account_last_error", err=mt5.last_error()))
             return None
-        
-        # Convert to dictionary for easier handling
+
         account_data = {
             'login': account_info.login,
             'server': account_info.server,
@@ -42,123 +42,127 @@ def get_detailed_account_info():
             'margin_so_call': account_info.margin_so_call,
             'margin_so_so': account_info.margin_so_so
         }
-        
+
         return account_data
-        
+
     except Exception as e:
-        print(f"Exception occurred while getting account info: {e}")
+        print(t("account_exception", e=e))
         return None
+
 
 def print_account_summary(account_data):
     """
     Print formatted account summary
-    
+
     Args:
         account_data (dict): Account information dictionary
     """
     if not account_data:
-        print("No account data available")
+        print(t("account_no_data"))
         return
-    
+
+    cur = account_data['currency']
+    yn_yes = t("yes_no_yes")
+    yn_no = t("yes_no_no")
+
     print("\n" + "="*50)
-    print("           ACCOUNT INFORMATION")
+    print(t("account_title"))
     print("="*50)
-    print(f"Account ID: {account_data['login']}")
-    print(f"Server: {account_data['server']}")
-    print(f"Company: {account_data['company']}")
-    print(f"Account Name: {account_data['name']}")
-    print(f"Currency: {account_data['currency']}")
-    print(f"Leverage: 1:{account_data['leverage']}")
+    print(t("account_id", v=account_data['login']))
+    print(t("account_server", v=account_data['server']))
+    print(t("account_company", v=account_data['company']))
+    print(t("account_name", v=account_data['name']))
+    print(t("account_currency", v=account_data['currency']))
+    print(t("account_leverage", v=account_data['leverage']))
     print("\n" + "-"*30)
-    print("         FINANCIAL DATA")
+    print(t("account_financial"))
     print("-"*30)
-    print(f"Balance: {account_data['balance']:.2f} {account_data['currency']}")
-    print(f"Equity: {account_data['equity']:.2f} {account_data['currency']}")
-    print(f"Profit/Loss: {account_data['profit']:.2f} {account_data['currency']}")
-    print(f"Free Margin: {account_data['free_margin']:.2f} {account_data['currency']}")
-    print(f"Margin Level: {account_data['margin_level']:.2f}%")
+    print(t("account_balance", v=account_data['balance'], cur=cur))
+    print(t("account_equity", v=account_data['equity'], cur=cur))
+    print(t("account_profit", v=account_data['profit'], cur=cur))
+    print(t("account_free_margin", v=account_data['free_margin'], cur=cur))
+    print(t("account_margin_level", v=account_data['margin_level']))
     print("\n" + "-"*30)
-    print("        TRADING STATUS")
+    print(t("account_trading_status"))
     print("-"*30)
-    print(f"Trading Allowed: {'✓' if account_data['trade_allowed'] else '✗'}")
-    print(f"Expert Advisors: {'✓' if account_data['trade_expert'] else '✗'}")
-    print(f"Last Updated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print(t("account_trade_allowed", v=yn_yes if account_data['trade_allowed'] else yn_no))
+    print(t("account_trade_expert", v=yn_yes if account_data['trade_expert'] else yn_no))
+    print(t("account_last_updated", v=datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
     print("="*50)
+
 
 def check_trading_conditions(account_data):
     """
     Check if account is ready for trading
-    
+
     Args:
         account_data (dict): Account information dictionary
-    
+
     Returns:
         bool: True if ready for trading, False otherwise
     """
     if not account_data:
         return False
-    
+
     warnings = []
     errors = []
-    
-    # Check trading permissions
+
     if not account_data['trade_allowed']:
-        errors.append("Trading is not allowed on this account")
-    
+        errors.append(t("account_err_trade_disabled"))
+
     if not account_data['trade_expert']:
-        errors.append("Expert Advisors are not allowed")
-    
-    # Check margin level
+        errors.append(t("account_err_expert_disabled"))
+
     if account_data['margin_level'] < 100:
-        errors.append(f"Low margin level: {account_data['margin_level']:.2f}%")
+        errors.append(t("account_err_margin_low", v=account_data['margin_level']))
     elif account_data['margin_level'] < 200:
-        warnings.append(f"Margin level is low: {account_data['margin_level']:.2f}%")
-    
-    # Check free margin
+        warnings.append(t("account_warn_margin_low", v=account_data['margin_level']))
+
     if account_data['free_margin'] < 100:
-        warnings.append(f"Low free margin: {account_data['free_margin']:.2f}")
-    
-    # Print warnings and errors
+        warnings.append(t("account_warn_free_margin", v=account_data['free_margin']))
+
     if warnings:
-        print("\n⚠️  WARNINGS:")
+        print(t("account_warn_header"))
         for warning in warnings:
             print(f"   - {warning}")
-    
+
     if errors:
-        print("\n❌ ERRORS:")
+        print(t("account_err_header"))
         for error in errors:
             print(f"   - {error}")
         return False
-    
+
     if not warnings and not errors:
-        print("\n✅ Account is ready for trading!")
-    
+        print(t("account_ready"))
+
     return True
+
 
 def main():
     """Main function"""
     try:
-        print("Retrieving account information...")
+        print(t("account_retrieving"))
         account_data = get_detailed_account_info()
-        
+
         if account_data:
             print_account_summary(account_data)
             check_trading_conditions(account_data)
         else:
-            print("\nFailed to retrieve account information.")
-            print("Please ensure:")
-            print("1. MetaTrader 5 is running")
-            print("2. You are logged into a trading account")
-            print("3. The account has proper permissions")
+            print(t("account_failed_retrieve"))
+            print(t("account_please_ensure"))
+            print(t("account_ensure_1"))
+            print(t("account_ensure_2"))
+            print(t("account_ensure_3"))
             sys.exit(1)
-            
+
     except KeyboardInterrupt:
-        print("\nOperation cancelled by user")
+        print(t("account_cancelled"))
     except Exception as e:
-        print(f"\nUnexpected error: {e}")
+        print(t("account_unexpected", e=e))
         sys.exit(1)
     finally:
         mt5.shutdown()
+
 
 if __name__ == "__main__":
     main()

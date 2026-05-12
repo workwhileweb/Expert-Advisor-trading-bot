@@ -1,0 +1,4 @@
+"%ProgramFiles%\MetaTrader 5\MetaEditor64.exe" 
+
+
+$mq5 = "C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA.mq5"; $log = "C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_compile.log"; & "${env:ProgramFiles}\MetaTrader 5\MetaEditor64.exe" /compile:"$mq5" /log:"$log"; if (Test-Path "C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA.ex5") { Write-Output "OK" } else { Get-Content $log }

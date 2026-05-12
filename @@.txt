@@ -1,0 +1,4 @@
+@Pending_tread.mq5 phân tích code chi tiết và dịch sang tiếng việt, bổ sung báo cáo định kỳ từ bot và % đạt đủ điều kiện vào lệnh ... cho bot. tạo file hướng dẫn sử dụng bot md, tạo file md chi tiết thuật toán của bot này
+
+
+https://github.com/Astralchemist/Expert-Advisor-trading-bot
