@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
+import sys
 from pathlib import Path
 
 import numpy as np
@@ -25,17 +27,33 @@ FEATURE_COUNT = 5
 DEFAULT_SEQ_LEN = 48
 DEFAULT_HIDDEN = 32
 DEFAULT_FLAT_THRESHOLD = 2.0
+DEFAULT_TERMINAL_PATHS = (
+    r"C:\Program Files\MetaTrader 5\terminal64.exe",
+    r"C:\Program Files (x86)\MetaTrader 5\terminal64.exe",
+)
+
+
+def configure_console_encoding() -> None:
+    if hasattr(sys.stdout, "reconfigure"):
+        try:
+            sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+            sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+        except Exception:
+            pass
 
 
 def timeframe_from_name(name: str) -> int:
+    if mt5 is None:
+        raise RuntimeError("MetaTrader5 package is not installed.")
+
     mapping = {
-        "M1": mt5.TIMEFRAME_M1 if mt5 else 1,
-        "M5": mt5.TIMEFRAME_M5 if mt5 else 5,
-        "M15": mt5.TIMEFRAME_M15 if mt5 else 15,
-        "M30": mt5.TIMEFRAME_M30 if mt5 else 30,
-        "H1": mt5.TIMEFRAME_H1 if mt5 else 60,
-        "H4": mt5.TIMEFRAME_H4 if mt5 else 240,
-        "D1": mt5.TIMEFRAME_D1 if mt5 else 1440,
+        "M1": mt5.TIMEFRAME_M1,
+        "M5": mt5.TIMEFRAME_M5,
+        "M15": mt5.TIMEFRAME_M15,
+        "M30": mt5.TIMEFRAME_M30,
+        "H1": mt5.TIMEFRAME_H1,
+        "H4": mt5.TIMEFRAME_H4,
+        "D1": mt5.TIMEFRAME_D1,
     }
     key = name.upper()
     if key not in mapping:
@@ -43,23 +61,69 @@ def timeframe_from_name(name: str) -> int:
     return mapping[key]
 
 
-def load_rates(symbol: str, timeframe: str, bars: int) -> np.ndarray:
+def ensure_mt5_initialized(terminal_path: str | None = None) -> None:
     if mt5 is None:
         raise RuntimeError("MetaTrader5 package is not installed.")
 
-    if not mt5.initialize():
-        raise RuntimeError(f"mt5.initialize() failed: {mt5.last_error()}")
+    if mt5.initialize():
+        return
 
-    try:
-        if not mt5.symbol_select(symbol, True):
-            raise RuntimeError(f"Cannot select symbol {symbol}: {mt5.last_error()}")
+    candidate_paths: list[str] = []
+    if terminal_path:
+        candidate_paths.append(terminal_path)
+    candidate_paths.extend(DEFAULT_TERMINAL_PATHS)
 
-        rates = mt5.copy_rates_from_pos(symbol, timeframe_from_name(timeframe), 0, bars)
-        if rates is None or len(rates) < DEFAULT_SEQ_LEN + 5:
-            raise RuntimeError(f"Not enough bars for {symbol}: {mt5.last_error()}")
-        return rates
-    finally:
-        mt5.shutdown()
+    for path in candidate_paths:
+        if not path or not os.path.exists(path):
+            continue
+        if mt5.initialize(path):
+            return
+
+    raise RuntimeError(f"mt5.initialize() failed: {mt5.last_error()}")
+
+
+def resolve_symbol(requested: str) -> str:
+    if mt5.symbol_select(requested, True):
+        info = mt5.symbol_info(requested)
+        if info is not None:
+            return requested
+
+    requested_key = requested.lower().replace(" ", "")
+    symbols = mt5.symbols_get()
+    if symbols is None:
+        raise RuntimeError(f"Cannot list symbols for {requested}: {mt5.last_error()}")
+
+    exact: list[str] = []
+    partial: list[str] = []
+    for item in symbols:
+        name = item.name
+        key = name.lower()
+        if key == requested_key:
+            exact.append(name)
+        elif requested_key in key or key in requested_key:
+            partial.append(name)
+
+    for name in exact + partial:
+        if mt5.symbol_select(name, True):
+            info = mt5.symbol_info(name)
+            if info is not None:
+                return name
+
+    raise RuntimeError(f"Cannot resolve symbol {requested}: {mt5.last_error()}")
+
+
+def symbol_point(symbol: str) -> float:
+    info = mt5.symbol_info(symbol)
+    if info is None:
+        raise RuntimeError(f"symbol_info({symbol}) failed: {mt5.last_error()}")
+    return float(info.point)
+
+
+def load_rates(symbol: str, timeframe: str, bars: int) -> np.ndarray:
+    rates = mt5.copy_rates_from_pos(symbol, timeframe_from_name(timeframe), 0, bars)
+    if rates is None or len(rates) < DEFAULT_SEQ_LEN + 5:
+        raise RuntimeError(f"Not enough bars for {symbol}: {mt5.last_error()}")
+    return rates
 
 
 def average_range(high: np.ndarray, low: np.ndarray, start: int, length: int, point: float) -> float:
@@ -161,17 +225,34 @@ def train_model(x: np.ndarray, y: np.ndarray, hidden: int, epochs: int, batch_si
 
 
 def export_onnx(model: HybridLstm, seq_len: int, out_path: Path) -> None:
+    import onnx
+
     model.eval()
     dummy = torch.randn(1, seq_len, FEATURE_COUNT, dtype=torch.float32)
+    export_path = out_path.with_suffix(".export.onnx")
     torch.onnx.export(
         model,
         dummy,
-        str(out_path),
+        str(export_path),
         input_names=["input"],
         output_names=["logits"],
         dynamic_axes=None,
-        opset_version=17,
+        opset_version=18,
     )
+
+    onnx_model = onnx.load(str(export_path), load_external_data=True)
+    onnx.save_model(
+        onnx_model,
+        str(out_path),
+        save_as_external_data=False,
+        location="",
+        size_threshold=0,
+    )
+    export_path.unlink(missing_ok=True)
+
+    data_path = Path(f"{out_path}.data")
+    if data_path.exists():
+        data_path.unlink()
 
 
 def write_metadata(path: Path, payload: dict) -> None:
@@ -189,41 +270,53 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--batch-size", type=int, default=128)
     parser.add_argument("--lr", type=float, default=1e-3)
     parser.add_argument("--flat-threshold-points", type=float, default=DEFAULT_FLAT_THRESHOLD)
+    parser.add_argument("--terminal-path", default="")
     parser.add_argument("--out-dir", default="models")
     return parser.parse_args()
 
 
 def main() -> None:
+    configure_console_encoding()
     args = parse_args()
     out_dir = Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    rates = load_rates(args.symbol, args.timeframe, args.bars)
-    point = float(mt5.symbol_info(args.symbol).point)
-    x, y = build_dataset(rates, args.seq_len, point, args.flat_threshold_points)
-    model = train_model(x, y, args.hidden, args.epochs, args.batch_size, args.lr)
+    terminal_path = args.terminal_path.strip() or None
+    ensure_mt5_initialized(terminal_path)
 
-    onnx_path = out_dir / "hybrid_lstm.onnx"
-    meta_path = out_dir / "hybrid_lstm_onnx.json"
-    export_onnx(model, args.seq_len, onnx_path)
-    write_metadata(
-        meta_path,
-        {
-            "input_name": "input",
-            "output_name": "logits",
-            "feature_count": FEATURE_COUNT,
-            "sequence_length": args.seq_len,
-            "hidden_size": args.hidden,
-            "label_up_index": 0,
-            "label_down_index": 1,
-            "feature_order": ["body_ratio", "prev_return", "upper_wick", "lower_wick", "range_ratio"],
-            "notes": "Copy hybrid_lstm.onnx to Terminal/MQL5/Files and set InpOnnxModelFile in Hybrid_LSTM_TA.mq5.",
-        },
-    )
+    try:
+        symbol = resolve_symbol(args.symbol)
+        point = symbol_point(symbol)
+        rates = load_rates(symbol, args.timeframe, args.bars)
+        x, y = build_dataset(rates, args.seq_len, point, args.flat_threshold_points)
+        model = train_model(x, y, args.hidden, args.epochs, args.batch_size, args.lr)
 
-    print(f"Samples: {len(x)}")
-    print(f"ONNX: {onnx_path.resolve()}")
-    print(f"Meta: {meta_path.resolve()}")
+        onnx_path = out_dir / "hybrid_lstm.onnx"
+        meta_path = out_dir / "hybrid_lstm_onnx.json"
+        export_onnx(model, args.seq_len, onnx_path)
+        write_metadata(
+            meta_path,
+            {
+                "input_name": "input",
+                "output_name": "logits",
+                "feature_count": FEATURE_COUNT,
+                "sequence_length": args.seq_len,
+                "hidden_size": args.hidden,
+                "symbol": symbol,
+                "timeframe": args.timeframe.upper(),
+                "label_up_index": 0,
+                "label_down_index": 1,
+                "feature_order": ["body_ratio", "prev_return", "upper_wick", "lower_wick", "range_ratio"],
+                "notes": "Copy hybrid_lstm.onnx to Terminal/MQL5/Files and set InpOnnxModelFile in Hybrid_LSTM_TA.mq5.",
+            },
+        )
+
+        print(f"Symbol: {symbol}")
+        print(f"Samples: {len(x)}")
+        print(f"ONNX: {onnx_path.resolve()}")
+        print(f"Meta: {meta_path.resolve()}")
+    finally:
+        mt5.shutdown()
 
 
 if __name__ == "__main__":

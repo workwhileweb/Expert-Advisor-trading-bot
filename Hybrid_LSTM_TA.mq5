@@ -309,13 +309,13 @@ bool RunLstmPredictorNative(const double &open[], const double &high[], const do
   }
 
 bool FillLstmInputMatrix(const double &open[], const double &high[], const double &low[], const double &close[],
-                         matrix &input)
+                         matrixf &inputMatrix)
   {
    const int seqLen = InpLstmSequence;
    if(ArraySize(close) < seqLen + 2)
       return false;
 
-   if(!input.Resize(seqLen, LSTM_FEAT))
+   if(!inputMatrix.Resize(seqLen, LSTM_FEAT))
       return false;
 
    const double avgRange = AverageRange(high, low, 0, MathMin(20, ArraySize(close) - 1));
@@ -327,7 +327,7 @@ bool FillLstmInputMatrix(const double &open[], const double &high[], const doubl
 
       const int row = (seqLen - 1) - t;
       for(int f = 0; f < LSTM_FEAT; f++)
-         input[row][f] = feature[f];
+         inputMatrix[row][f] = (float)feature[f];
      }
 
    return true;
@@ -366,25 +366,25 @@ bool RunLstmPredictorOnnx(const double &open[], const double &high[], const doub
    if(!g_onnxReady || g_onnxHandle == INVALID_HANDLE)
       return false;
 
-   matrix input;
-   if(!FillLstmInputMatrix(open, high, low, close, input))
+   matrixf inputMatrix(InpLstmSequence, LSTM_FEAT);
+   if(!FillLstmInputMatrix(open, high, low, close, inputMatrix))
       return false;
 
-   matrix output;
+   vectorf outputData(2);
    ResetLastError();
-   if(!OnnxRun(g_onnxHandle, ONNX_NO_CONVERSION, input, output))
+   if(!OnnxRun(g_onnxHandle, ONNX_NO_CONVERSION, inputMatrix, outputData))
      {
       Print(L("ONNX Run thất bại: ", "ONNX run failed: "), GetLastError());
       return false;
      }
 
-   if(output.Rows() < 1 || output.Cols() < 2)
+   if(outputData.Size() < 2)
      {
       Print(L("ONNX output không hợp lệ.", "Invalid ONNX output shape."));
       return false;
      }
 
-   ApplyLstmProbabilities(output[0][0], output[0][1], probUp, probDown, direction);
+   ApplyLstmProbabilities(outputData[0], outputData[1], probUp, probDown, direction);
    return true;
   }
 
@@ -416,7 +416,9 @@ bool LoadOnnxModel()
    if(g_onnxHandle == INVALID_HANDLE)
      {
       Print(L("Không mở được ONNX: ", "Cannot open ONNX: "), InpOnnxModelFile,
-            L(" | lỗi ", " | error "), GetLastError());
+            L(" | lỗi ", " | error "), GetLastError(),
+            L(" | Nếu log báo thiếu .onnx.data, train lại để gộp 1 file .onnx hoặc copy cả .onnx.data vào MQL5\\Files.",
+              " | If log mentions missing .onnx.data, retrain to a single .onnx or copy .onnx.data into MQL5\\Files."));
       return false;
      }
 
@@ -428,6 +430,18 @@ bool LoadOnnxModel()
    if(!OnnxSetInputShape(g_onnxHandle, 0, shape))
      {
       Print(L("OnnxSetInputShape thất bại: ", "OnnxSetInputShape failed: "), GetLastError());
+      OnnxRelease(g_onnxHandle);
+      g_onnxHandle = INVALID_HANDLE;
+      return false;
+     }
+
+   long outputShape[];
+   ArrayResize(outputShape, 2);
+   outputShape[0] = 1;
+   outputShape[1] = 2;
+   if(!OnnxSetOutputShape(g_onnxHandle, 0, outputShape))
+     {
+      Print(L("OnnxSetOutputShape thất bại: ", "OnnxSetOutputShape failed: "), GetLastError());
       OnnxRelease(g_onnxHandle);
       g_onnxHandle = INVALID_HANDLE;
       return false;
@@ -681,7 +695,7 @@ string TrendLabel(const int direction)
       return L("⬆️", "⬆️");
    if(direction < 0)
       return L("⬇️", "⬇️");
-   return L("=", "=");
+   return L("🔃", "🔃");
   }
 
 string PatternBiasLabel(const int patternSignal)
@@ -723,7 +737,7 @@ string ForecastAccuracyText()
       return L("% đúng: chưa có", "Accuracy: n/a");
 
    const double accuracyPct = 100.0 * (double)g_forecastCorrect / (double)g_forecastScored;
-   return StringFormat(L("% đúng: %.1f%% (%d/%d)", "Accuracy: %.1f%% (%d/%d)"),
+   return StringFormat(L("%.1f%%~%d/%d", "%.1f%%~%d/%d="),
                        accuracyPct, g_forecastCorrect, g_forecastScored);
   }
 
@@ -851,7 +865,7 @@ void LogHybridPrediction()
 
    string priceMoveText;
    if(g_hasPriorPrediction && priorPrice > 0.0)
-      priceMoveText = StringFormat(L("Δ %s ⇢ %s", "Δ %s ⇢ %s"),
+      priceMoveText = StringFormat(L("%s ⇢ %s", "%s ⇢ %s"),
                                    SignedDeltaText(priceDelta), TrendLabel(actualDirection));
    else
       priceMoveText = L("chưa có giá tham chiếu", "no reference price yet");
@@ -861,9 +875,8 @@ void LogHybridPrediction()
                    currentPrice, TrendLabel(actualDirection)) +
       StringFormat(L("Δ: %s | ", "Δ: %s | "), priceMoveText) +
       StringFormat(L("Dự đoán: %s | ", "Forecast: %s | "), TrendLabel(finalDirection)) +
-      StringFormat(L("Dự đoán trước: %s (%s) | ", "Prior forecast: %s (%s) | "),
-                   priorForecastLabel, priorResultLabel) +
-      accuracyText + " | " +
+      StringFormat(L("trước đó: %s (%s) / (%s) | ", "Prior forecast: %s (%s) / (%s) | "),
+                   priorForecastLabel, priorResultLabel,accuracyText) +
       StringFormat(L("TA-Lib: %s (%s) | ", "TA-Lib: %s (%s) | "),
                    patternName, PatternBiasLabel(patternSignal)) +
       StringFormat(L("S: %.5f R: %.5f | ", "S: %.5f R: %.5f | "), support, resistance) +

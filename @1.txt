@@ -1,0 +1,18 @@
+lúc mới khởi tạo, hủy hết tất cả các lệnh đang đánh trước đó
+đóng tất cả các lệnh lên xuống
+
+hàm đánh sẽ quyết định dựa vào tham số thị trường tăng hay giảm
+mỗi chu kỳ nến/ hoặc mỗi 1 giây quét hệ thống nến 1 lần
+để chờ giá tăng giảm
+dự đoán giá tăng giảm theo nến và thông báo vào log
+
+nếu hàm đang đánh, thông báo là đang chờ chốt lời hay gồng lỗ (tổng dương của các lệnh đang đánh)
+điều kiện gồng lỗ là input, mặc định là tổng lỗ = 50% vốn
+điều kiện chốt lời là input, mặc định là tổng lời các lệnh đang đánh > 5% vốn
+số lệnh nhồi là input, mặc định = 2
+
+nếu tín hiệu thị trường là xuống, đánh 1 lệnh short mồi, tương tự lên thì long mồi
+giá trị ban đầu là input, mặc định = 1% vốn
+
+quét giá biến động mỗi giây
+nếu lệnh vừa đánh lãi thì 
