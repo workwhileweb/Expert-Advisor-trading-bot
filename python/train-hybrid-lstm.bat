@@ -10,5 +10,5 @@ py "%~dp0train_hybrid_lstm.py" --symbol XAUUSDm --timeframe M1 --bars 50000 --se
 if errorlevel 1 exit /b 1
 
 echo.
-echo [OK] Copy models\hybrid_lstm.onnx vao MQL5\Files. Khong can file .onnx.data.
+echo [OK] Copy models\*.onnx vao MQL5\Files. Khong can file .onnx.data.
 exit /b 0

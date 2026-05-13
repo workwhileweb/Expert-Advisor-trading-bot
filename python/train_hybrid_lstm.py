@@ -259,6 +259,18 @@ def write_metadata(path: Path, payload: dict) -> None:
     path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
 
 
+def onnx_output_base(symbol: str, timeframe: str) -> str:
+    """Stem like hybrid_lstm_xauusd_m1 for ONNX and sidecar JSON (Windows-safe)."""
+    sym = symbol.lower().replace(" ", "")
+    # MT5 micro suffix (XAUUSDm -> xauusd in filename)
+    if len(sym) > 1 and sym.endswith("m"):
+        sym = sym[:-1]
+    for ch in '<>:"/\\|?*':
+        sym = sym.replace(ch, "_")
+    tf = timeframe.strip().lower()
+    return f"hybrid_lstm_{sym}_{tf}"
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Train Hybrid LSTM and export ONNX.")
     parser.add_argument("--symbol", default="XAUUSDm")
@@ -291,8 +303,9 @@ def main() -> None:
         x, y = build_dataset(rates, args.seq_len, point, args.flat_threshold_points)
         model = train_model(x, y, args.hidden, args.epochs, args.batch_size, args.lr)
 
-        onnx_path = out_dir / "hybrid_lstm.onnx"
-        meta_path = out_dir / "hybrid_lstm_onnx.json"
+        out_base = onnx_output_base(symbol, args.timeframe)
+        onnx_path = out_dir / f"{out_base}.onnx"
+        meta_path = out_dir / f"{out_base}_onnx.json"
         export_onnx(model, args.seq_len, onnx_path)
         write_metadata(
             meta_path,
@@ -307,7 +320,7 @@ def main() -> None:
                 "label_up_index": 0,
                 "label_down_index": 1,
                 "feature_order": ["body_ratio", "prev_return", "upper_wick", "lower_wick", "range_ratio"],
-                "notes": "Copy hybrid_lstm.onnx to Terminal/MQL5/Files and set InpOnnxModelFile in Hybrid_LSTM_TA.mq5.",
+                "notes": "Copy *.onnx to Terminal/MQL5/Files and set InpOnnxModelFile in Hybrid_LSTM_TA.mq5.",
             },
         )
 
