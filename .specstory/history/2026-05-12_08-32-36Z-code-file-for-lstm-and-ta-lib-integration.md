@@ -3333,9 +3333,28 @@ Parameters:
   "searchTerm": "MQL5 OnnxRun matrixf parameter is empty 5805"
 }
 ```
+Result:
+
+```json
+{
+  "isFinal": true,
+  "references": [
+    {
+      "chunk": "Links:\n1. [Error with use ONNX model from CatBoost in MQL5](https://stackoverflow.com/questions/79587142/error-with-use-onnx-model-from-catboost-in-mql5)\n2. [HELP! I can't manage to make this onnx model work with the EA, always error 5805 - Day Trading - Expert Advisors and Automated Trading - MQL5 programming forum](https://www.mql5.com/en/forum/461603)\n3. [Running a model - ONNX models - MQL5 Reference](https://mql5.com/en/docs/onnx/onnx_mql5)\n4. [Mastering ONNX: The Game-Changer for MQL5 Traders - MQL5 Articles](http://www.mql5.com/en/articles/13394)\n5. [Automatic data type conversion - ONNX models - MQL5 Reference](https://mql5.com/en/docs/onnx/onnx_types_autoconversion)\n\n# MQL5 OnnxRun Error 5805 - \"Parameter is Empty\"\n\nError 5805 in MQL5 ONNX operations indicates that \"parameter is empty.\" This error occurs when calling &#96;OnnxRun()&#96; with an ONNX model.[1]\n\n## Common Issue\n\nBased on reported cases, this error happens when using certain ONNX models (particularly regression models from CatBoost) even when input data appears to be properly populated with non-zero values.[1] One user reported successfully using a classification model but encountering error 5805 when attempting to use a regression model from the same training process, despite passing identically formatted input data with shape {1, 31}.[1]\n\n## Troubleshooting Steps\n\nThe standard process for running ONNX models in MQL5 involves:\n\n1. Load the model using &#96;OnnxCreate()&#96; or &#96;OnnxCreateFromBuffer()&#96;\n2. Set input shape with &#96;OnnxSetInputShape()&#96;\n3. Set output shape with &#96;OnnxSetOutputShape()&#96;\n4. Run the model with &#96;OnnxRun()&#96;[3]\n\nWhen calling &#96;OnnxRun()&#96;, ensure you're using proper data types. The function supports automatic data type conversion unless the &#96;ONNX_NO_CONVERSION&#96; flag is specified.[5] Make sure your input matrix (matrixf) and output vector (vectorf) are properly initialized before passing them to &#96;OnnxRun()&#96;.[3]\n\nThe search results do not provide a definitive solution for error 5805 specifically, though the issue appears to be model-specific rather than a general data formatting problem.",
+      "title": "Web search results"
+    },
+    {
+      "chunk": "Full page text written to file: C:\\Users\\workw\\.cursor\\projects\\c-Users-workw-Downloads-git-Expert-Advisor-trading-bot\\agent-tools\\428edc40-1757-4d46-8925-97044b995214.txt\nSize: 51.3 KB, 1055 lines\nUse shell / grep / read_file on this path to inspect the page; no follow-up fetch is needed.",
+      "title": "Mastering ONNX: The Game-Changer for MQL5 Traders - MQL5 Articles",
+      "url": "http://www.mql5.com/en/articles/13394"
+    }
+  ],
+  "rejected": false
+}
+```
 User decision: **accepted**
 
-Status: **loading**
+Status: **completed**
 
 
 </details>
@@ -3345,3 +3364,189 @@ Status: **loading**
 <summary>Tool use: **web_search**</summary>
 
 </details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="web_fetch">
+<details>
+<summary>Tool use: **web_fetch**</summary>
+
+
+Parameters:
+
+```json
+{
+  "url": "https://www.mql5.com/en/docs/onnx/onnx_mql5"
+}
+```
+Result:
+
+```json
+{
+  "markdown": "Running a model - ONNX models - MQL5 Reference\n\n# Running a model\n\nTo run an ONNX model in MQL5, complete 3 steps:\n\n1. Load the model from an *.onnx file using the [OnnxCreate](https://www.mql5.com/en/docs/onnx/onnxcreate) function or from an array using [OnnxCreateFromBuffer](https://www.mql5.com/en/docs/onnx/onnxcreatefrombuffer).\n2. Specify input and output data shapes using [OnnxSetInputShape](https://www.mql5.com/en/docs/onnx/onnxsetinputshape) and [OnnxSetOutputShape](https://www.mql5.com/en/docs/onnx/onnxsetoutputshape) functions.\n3. Run the model using the [OnnxRun](https://www.mql5.com/en/docs/onnx/onnxrun) function, passing to it the relevant input and output parameters.\n4. When needed, you can terminate the model operation using the [OnnxRelease](https://www.mql5.com/en/docs/onnx/onnxrelease) function.\n\nWhen creating an ONNX model, you should consider the existing limits and restrictions, which are described at [https://github.com/microsoft/onnxruntime/blob/rel-1.14.0/docs/OperatorKernels.md](https://github.com/microsoft/onnxruntime/blob/rel-1.14.0/docs/OperatorKernels.md)\n\nSome of the examples of such restrictions are shown below:\n\nOperation\n\nSupported data types\n\nReduceSum\n\ntensor(double), tensor(float), tensor(int32), tensor(int64)\n\nMul\n\ntensor(bfloat16), tensor(double), tensor(float), tensor(float16), tensor(int32), tensor(int64), tensor(uint32), tensor(uint64)\n\nBelow is an MQL5 code example from the public project [ONNX.Price.Prediction](https://www.mql5.com/en/docs/onnx/onnx_prepare#model_sample).\n\nconst long ExtOutputShape[] = {1,1}; // model's output shape const long ExtInputShape [] = {1,10,4}; // model's input shape #resource \"Python/model.onnx\" as uchar ExtModel[]// model as a resource //+------------------------------------------------------------------+ //| Script program start function | //+------------------------------------------------------------------+ int OnStart(void) { matrix rates; //--- get 10 bars if(!rates.CopyRates(\"EURUSD\",PERIOD_H1,COPY_RATES_OHLC,2,10)) return(-1); //--- input a set of OHLC vectors matrix x_norm=rates.Transpose(); vector m=x_norm.Mean(0); vector s=x_norm.Std(0); matrix mm(10,4); matrix ms(10,4); //--- fill in the normalization matrices for(int i=0; i\u003c10; i++) { mm.Row(m,i); ms.Row(s,i); } //--- normalize the input data x_norm-=mm; x_norm/=ms; //--- create the model long handle=OnnxCreateFromBuffer(ExtModel,ONNX_DEBUG_LOGS); //--- specify the shape of the input data if(!OnnxSetInputShape(handle,0,ExtInputShape)) { Print(\"OnnxSetInputShape failed, error \",GetLastError()); OnnxRelease(handle); return(-1); } //--- specify the shape of the output data if(!OnnxSetOutputShape(handle,0,ExtOutputShape)) { Print(\"OnnxSetOutputShape failed, error \",GetLastError()); OnnxRelease(handle); return(-1); } //--- convert normalized input data to float type matrixf x_normf; x_normf.Assign(x_norm); //--- get the output data of the model here, i.e. the price prediction vectorf y_norm(1); //--- run the model if(!OnnxRun(handle,ONNX_DEBUG_LOGS | ONNX_NO_CONVERSION,x_normf,y_norm)) { Print(\"OnnxRun failed, error \",GetLastError()); OnnxRelease(handle); return(-1); } //--- print the output value of the model to the log Print(y_norm); //--- do the reverse transformation to get the predicted price double y_pred=y_norm[0]*s[3]+m[3]; Print(\"price predicted:\",y_pred); //--- complete operation OnnxRelease(handle); return(0); }\n\nScript run example:\n\nONNX: Creating and using per session threadpools since use_per_session_threads_ is true ONNX: Dynamic block base set to 0 ONNX: Initializing session. ONNX: Adding default CPU execution provider. ONNX: Total shared scalar initializer count: 0 ONNX: Total fused reshape node count: 0 ONNX: Total shared scalar initializer count: 0 ONNX: Total fused reshape node count: 0 ONNX: Use DeviceBasedPartition as default ONNX: Saving initialized tensors. ONNX: Done saving initialized tensors ONNX: Session successfully initialized. [0.28188983] predicted 1.0559258806393044\n\nThe MetaTrader 5 terminal has selected the optimal executor for calculations — [ONNX Runtime Execution Provider](https://onnxruntime.ai/docs/execution-providers/). In this example, the model was executed on the CPU.\n\nLet's modify the script to calculate the percentage of successful Close price predictions made based on the values of the preceding 10 bars.\n\n#resource \"Python/model.onnx\" as uchar ExtModel[]// model as a resource #define TESTS 10000 // number of test datasets //+------------------------------------------------------------------+ //| Script program start function | //+------------------------------------------------------------------+ int OnStart() { //--- create the model long session_handle=OnnxCreateFromBuffer(ExtModel,ONNX_DEBUG_LOGS); if(session_handle==INVALID_HANDLE) { Print(\"Cannot create model. Error \",GetLastError()); return(-1); } //--- since the input tensor size is not defined for the model, specify it explicitly //--- first index is batch size, second index is series size, third index is number of series (OHLC) const long input_shape[]={1,10,4}; if(!OnnxSetInputShape(session_handle,0,input_shape)) { Print(\"OnnxSetInputShape error \",GetLastError()); return(-2); } //--- since the output tensor size is not defined for the model, specify it explicitly //--- first index is batch size, must match the batch size in the input tensor //--- second index is number of predicted prices (only Close is predicted here) const long output_shape[]={1,1}; if(!OnnxSetOutputShape(session_handle,0,output_shape)) { Print(\"OnnxSetOutputShape error \",GetLastError()); return(-3); } //--- run tests vector closes(TESTS); // vector to store validation prices vector predicts(TESTS); // vector to store obtained predictions vector prev_closes(TESTS); // vector to store preceding prices matrix rates; // matrix to get the OHLC series matrix splitted[2]; // two submatrices to divide the series into test and validation ulong parts[]={10,1}; // sizes of divided submatrices //--- start from the previous bar for(int i=1; i\u003c=TESTS; i++) { //--- get 11 bars rates.CopyRates(\"EURUSD\",PERIOD_H1,COPY_RATES_OHLC,i,11); //--- divide the matrix into test and validation rates.Vsplit(parts,splitted); //--- take the Close price from the validation matrix closes[i-1]=splitted[1][3][0]; //--- last Close in the tested series prev_closes[i-1]=splitted[0][3][9]; //--- submit the test matrix of 10 bars to testing predicts[i-1]=PricePredictionTest(session_handle,splitted[0]); //--- runtime error if(predicts[i-1]\u003c=0) { OnnxRelease(session_handle); return(-4); } } //--- complete operation OnnxRelease(session_handle); //--- evaluate if price movement was predicted correctly int right_directions=0; vector delta_predicts=prev_closes-predicts; vector delta_actuals=prev_closes-closes; for(int i=0; i 0 \u0026\u0026 delta_actuals[i]\u003e0) || (delta_predicts[i]\u003c0 \u0026\u0026 delta_actuals[i]\u003c0)) right_directions++; PrintFormat(\"right direction predictions = %.2f%%\",(right_directions*100.0)/double(TESTS)); //--- return(0); } //+------------------------------------------------------------------+ //| Prepare the data and run the model | //+------------------------------------------------------------------+ double PricePredictionTest(const long session_handle,matrix\u0026 rates) { static matrixf input_data(10,4); // matrix for the transformed input static vectorf output_data(1); // vector to receive the result static matrix mm(10,4); // matrix of horizontal vectors Mean static matrix ms(10,4); // matrix of horizontal vectors Std //--- a set of OHLC vertical vectors must be input into the model matrix x_norm=rates.Transpose(); //--- normalize prices vector m=x_norm.Mean(0); vector s=x_norm.Std(0); for(int i=0; i\u003c10; i++) { mm.Row(m,i); ms.Row(s,i); } x_norm-=mm; x_norm/=ms; //--- run the model input_data.Assign(x_norm); if(!OnnxRun(session_handle,ONNX_DEBUG_LOGS,input_data,output_data)) { Print(\"OnnxRun error \",GetLastError()); return(0); } //--- unnormalize the price from the output value double y_pred=output_data[0]*s[3]+m[3]; return(y_pred); }\n\nRun the script: the prediction accuracy is about 51%\n\nONNX: Creating and using per session threadpools since use_per_session_threads_ is true ONNX: Dynamic block base set to 0 ONNX: Initializing session. ONNX: Adding default CPU execution provider. ONNX: Total shared scalar initializer count: 0 ONNX: Total fused reshape node count: 0 ONNX: Total shared scalar initializer count: 0 ONNX: Total fused reshape node count: 0 ONNX: Use DeviceBasedPartition as default ONNX: Saving initialized tensors. ONNX: Done saving initialized tensors ONNX: Session successfully initialized. right direction predictions = 51.34 %\n\n[Validation in the Strategy Tester](https://www.mql5.com/en/docs/onnx/onnx_test)\n\nThis website uses cookies. Learn more about our [Cookies Policy](https://www.mql5.com/en/about/cookies).",
+  "url": "https://www.mql5.com/en/docs/onnx/onnx_mql5"
+}
+```
+User decision: **accepted**
+
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="web_fetch"><details>
+<summary>Tool use: **web_fetch**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "C:\\Users\\workw\\.cursor\\projects\\c-Users-workw-Downloads-git-Expert-Advisor-trading-bot\\agent-tools\\428edc40-1757-4d46-8925-97044b995214.txt",
+  "pattern": "OnnxRun|OnnxSetOutputShape|vectorf|matrixf"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "C:\\Users\\workw\\.cursor\\projects\\c-Users-workw-Downloads-git-Expert-Advisor-trading-bot\\agent-tools\\428edc40-1757-4d46-8925-97044b995214.txt",
+  "pattern": "OnnxRun|OnnxSetOutputShape|vectorf|matrixf",
+  "topFiles": [
+    {
+      "matchCount": 24,
+      "uri": "..\\..\\..\\.cursor\\projects\\c-Users-workw-Downloads-git-Expert-Advisor-trading-bot\\agent-tools\\428edc40-1757-4d46-8925-97044b995214.txt"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 24
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Key findings from MQL5 docs: 1. Need **OnnxSetOutputShape** in addition to OnnxSetInputShape.  
+Output for shape `{1, 2}` should be **vectorf(2)** not empty matrixf.  
+Input shape should be `{1, 48, 5}` explicitly.  
+Example uses `OnnxRun(handle, ..., x_normf, y_norm)` with **vectorf y_norm(1)** pre-sized.  
+Article says: "It is very crucial to resize this vector or matrix".  
+
+Fixes:  
+1. Add OnnxSetOutputShape with shape `{1, 2}` for logits output.  
+2. Use `vectorf outputData(2)` or `matrixf` with proper size before OnnxRun. For the input, use a matrixf with shape [1, 48, 5] or flatten it appropriately, matching the expected 3D shape. The model's output should be [1, 2], so set the output shape accordingly using `OnnxSetOutputShape` with dimensions `{1, 2}`. Ensure the matrix is properly sized and consider using `ONNX_NO_CONVERSION` since it's already in float format. To fix `RunLstmPredictorOnnx`, resize `outputData` to size 2 before calling `OnnxRun`. Alternatively, use `matrixf outputMatrix(1,2)` pre-sized. `OnnxRun` supports converting `matrixf` to `vectorf`. Verify `FillLstmInputMatrix` works correctly and that `matrixf::Resize` returns `void`, not `bool`. Ensure the input matrix is not empty by confirming `FillLstmInputMatrix` functions properly.</details></think>
+
+_**Agent (default)**_
+
+Lỗi 5805 do output ONNX chưa được cấp hình — thêm `OnnxSetOutputShape` và buffer `vectorf` đã resize trước `OnnxRun`.
+
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA.mq5</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+I'll update RunLstmPredictorOnnx and LoadOnnxModel.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Check FillLstmInputMatrix for necessary adjustments when resizing a pre-initialized matrixf.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: $mq5 = "C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA.mq5"; $log = "C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_compile.log"; & "${env:ProgramFiles}\MetaTrader 5\MetaEditor64.exe" /compile:"$mq5" /log:"$log"; if (Test-Path "C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA.ex5") { Write-Output "OK" } else { Get-Content $log }</summary>
+
+```bash
+$mq5 = "C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA.mq5"; $log = "C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_compile.log"; & "${env:ProgramFiles}\MetaTrader 5\MetaEditor64.exe" /compile:"$mq5" /log:"$log"; if (Test-Path "C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA.ex5") { Write-Output "OK" } else { Get-Content $log }
+```
+
+```
+OK
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+## Nguyên nhân
+
+Lỗi 5805 vì buffer output ONNX chưa được khai báo kích thước trước `OnnxRun`.
+
+## Đã sửa
+
+- Thêm `OnnxSetOutputShape` với shape `{1, 2}`.
+- Dùng `vectorf(2)` làm output thay cho `matrixf` rỗng.
+- Input vẫn là `matrixf` với `ONNX_NO_CONVERSION`.
+
+`Hybrid_LSTM_TA.ex5` đã build lại — gắn lại EA trên chart. Log không còn `ONNX Run thất bại: 5805`; cảnh báo CUDA có thể bỏ qua nếu log chọn CPU.

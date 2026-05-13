@@ -1,0 +1,4 @@
+"C:\Program Files\MetaTrader 5\MetaEditor64.exe"
+
+& "C:\Program Files\MetaTrader 5\MetaEditor64.exe" /compile:"C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA.mq5" /log:"C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_compile.log"
+& "C:\Program Files\MetaTrader 5\MetaEditor64.exe" /compile:"C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5" /log:"C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade_compile.log"

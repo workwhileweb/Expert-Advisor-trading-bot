@@ -12,7 +12,22 @@ nếu hàm đang đánh, thông báo là đang chờ chốt lời hay gồng l�
 số lệnh nhồi là input, mặc định = 2
 
 nếu tín hiệu thị trường là xuống, đánh 1 lệnh short mồi, tương tự lên thì long mồi
-giá trị ban đầu là input, mặc định = 1% vốn
+giá trị ban đầu là input, mặc định = 1% vốn (hoặc 1% giá)
 
-quét giá biến động mỗi giây
-nếu lệnh vừa đánh lãi thì 
+sau lệnh mồi thì quét giá biến động mỗi giây
+lúc này không quan tâm tới dự đoán thị trường nữa, chỉ mở lại dự đoán khi đã chốt xong lời lỗ
+
+
+
+
+Nếu lệnh vừa đánh lãi thì gồng chờ chốt lời không vào lệnh thêm
+Nếu lệnh vừa đánh lỗ thì ngay lập tức đánh thêm 1 lệnh cùng chiều, tăng giá thêm 20píp(có thể điều chỉnh)
+nếu vẫn lỗ và chưa tới giới hạn số lệnh nhồi, lại tiếp tục đánh thêm lệnh cùng chiều tăng giá 20 pips từ giá cuối
+tới giới hạn thì ngồi chờ tổng giao dịch là dương thì hủy lệnh bắt đầu lại (dương hay là tới mốc chốt lời?)
+nếu chưa dương mà vượt qua giá cuối 10 píp thì đặt ngược lại 1 lệnh 5%(0.05) sau đó chờ dương đóng hết lệnh hoặc
+gồng lỗ tới mốc lỗ 50%(có thể điều chỉnh) giá trị tài khoản
+
+thông báo là đang chờ chốt lời hay gồng lỗ (tổng dương của các lệnh đang đánh)
+điều kiện gồng lỗ là input, mặc định là tổng lỗ = 50% vốn
+điều kiện chốt lời là input, (mặc định là tổng lời các lệnh đang đánh) giảm 5% (ví dụ: tổng lệnh đang lời 100usd giảm lời còn 95usd thì chốt lời nếu tăng lên 105usd thì vẫn giữ lệnh)
+số lệnh nhồi thêm là input, mặc định = 2(tổng 3 lệnh)

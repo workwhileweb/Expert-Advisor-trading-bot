@@ -1,3 +1,28 @@
 {
-    "specstory.cloudSync.enabled": "never"
+    "specstory.cloudSync.enabled": "never",
+    "clangd.fallbackFlags": [
+        "-xc++",
+        "-std=c++17",
+        "-D__MQL__",
+        "-D__MQL5__",
+        "-includec:/Users/workw/.cursor/extensions/ngsoftware.mql-clangd-1.1.43-universal/files/mql_clangd_compat.h",
+        "-fms-extensions",
+        "-fms-compatibility",
+        "-ferror-limit=0",
+        "-Wno-invalid-token-paste",
+        "-Wno-unused-value",
+        "-Wno-unknown-pragmas",
+        "-Wno-writable-strings",
+        "-Xclang",
+        "-Wno-invalid-pp-directive",
+        "-Wno-unknown-directives",
+        "-Wno-language-extension-token",
+        "-Ic:/Users/workw/Downloads/git/Expert-Advisor-trading-bot",
+        "-Ic:/Users/workw/Downloads/git/Expert-Advisor-trading-bot/Include"
+    ],
+    "files.associations": {
+        "*.mqh": "cpp",
+        "*.mq4": "cpp",
+        "*.mq5": "cpp"
+    }
 }
