@@ -4369,7 +4369,36 @@ _**Agent (default)**_
 <details>
 <summary>Tool use: **ripgrep_raw_search**</summary>
 
-Status: **loading**
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "contextAfter": 12,
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot\\Hybrid_LSTM_TA_SignalTrade.mq5",
+  "pattern": "void LogBasketExitBanner"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot\\Hybrid_LSTM_TA_SignalTrade.mq5",
+  "pattern": "void LogBasketExitBanner",
+  "topFiles": [
+    {
+      "matchCount": 13,
+      "uri": "Hybrid_LSTM_TA_SignalTrade.mq5"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 1
+}
+```
+Status: **completed**
 
 
 </details>
@@ -4379,3 +4408,471 @@ Status: **loading**
 <summary>Tool use: **ripgrep_raw_search**</summary>
 
 </details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The function expects two parameters, but the calls pass a single string using `L("...", "...")` as the first argument.</details></think>
+
+_**Agent (default)**_
+
+Sửa lời gọi: `L(...)` trả về một chuỗi — không thể dùng làm hai tham số `titleVi` và `titleEn`.
+
+
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Print(L(detailVi, detailEn)) selects one language for multiline details.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: & "C:\Program Files\MetaTrader 5\MetaEditor64.exe" /compile:"C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5" /log:"C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade_compile.log"</summary>
+
+```bash
+& "C:\Program Files\MetaTrader 5\MetaEditor64.exe" /compile:"C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5" /log:"C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade_compile.log"
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade_compile.log</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade_compile.log</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+Đã xử lý xong phần còn lại sau handoff.
+
+## Lỗi đã sửa
+
+`LogBasketExitBanner` nhận **hai** chuỗi tiêu đề (`titleVi`, `titleEn`), nhưng các chỗ gọi lại dùng **`L("vi","en")`** — chỉ là **một** chuỗi theo ngôn ngữ. Trong MQL5 các tham số sau bị **lệch** (equity đi vào chỗ title EN, v.v.), compile có thể nhầm kiểu hoặc hành vi sai.
+
+Đã đổi bốn chỗ gọi sang dạng đúng:
+
+```text
+LogBasketExitBanner("Tiêu đề VI", "Title EN", eq, pnl, cur, dVi, dEn);
+```
+
+## Biên dịch
+
+`Hybrid_LSTM_TA_SignalTrade.mq5` biên dịch **0 errors, 0 warnings**.
+
+---
+
+## Nhắc lại vì sao TP/SL có thể “nhanh”
+
+| Thoát | Input chính | Ý nghĩa ngắn |
+|--------|-------------|----------------|
+| Chốt lời | `InpTakeProfitEquityPct` | Đóng khi P+L ròng ≥ **equity × %**. Equity nhỏ hoặc lot lớn → mục tiêu **USD** đạt rất nhanh. |
+| Cắt lỗ cứng | `InpMaxLossEquityPct` | Đóng khi P+L ≤ **−equity × %**. % nhỏ → cắt sớm. |
+| Trail | `InpTrailDropFromPeakPct` | Chỉ khi P+L ≥ 0; thoát khi lùi **% so với đỉnh** đã ghi nhận. % nhỏ → thoát sau pullback nhỏ. |
+| Quay đầu | `InpReversalClosePctOfTp` | So với **tpAbs** (mục tiêu TP tiền); cho phép “hồi” một phần rồi đóng. |
+
+Log Experts giờ luôn in khối **`[ĐÓNG BASKET]`** kèm equity, P+L và chi tiết tiếng Việt/Anh — không bị `InpQuietExpertsLog` che khuất lý do thoát.
+
+Nếu muốn EA **giữ lệnh lâu hơn**, thường chỉnh: **tăng** `InpTakeProfitEquityPct`, **tăng** `InpMaxLossEquityPct`, **tăng** `InpTrailDropFromPeakPct`, hoặc đặt **`InpReversalClosePctOfTp = 0`** để tắt nhánh quay đầu.
+
+---
+
+_**User**_
+
+@Hybrid_LSTM_TA_SignalTrade.mq5:24-25 user report lại khi set = 0 đáng lý là phải tắt chức năng chốt lời khi quay đầu từ đỉnh x% thì EA lại đóng lệnh luôn? kiểm tra xem đúng không và nếu đúng thì fix, nếu sai thì giải thích rõ
+
+---
+
+_**Agent (default)**_
+
+Đang kiểm tra cách `InpReversalClosePctOfTp` được dùng và các nhánh đóng lệnh khác.
+
+
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot\\Hybrid_LSTM_TA_SignalTrade.mq5",
+  "pattern": "InpReversalClosePctOfTp|Reversal|reversal"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot\\Hybrid_LSTM_TA_SignalTrade.mq5",
+  "pattern": "InpReversalClosePctOfTp|Reversal|reversal",
+  "topFiles": [
+    {
+      "matchCount": 22,
+      "uri": "Hybrid_LSTM_TA_SignalTrade.mq5"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 22
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot\\Hybrid_LSTM_TA_SignalTrade.mq5",
+  "pattern": "ManageBasket|CloseAllOur"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot\\Hybrid_LSTM_TA_SignalTrade.mq5",
+  "pattern": "ManageBasket|CloseAllOur",
+  "topFiles": [
+    {
+      "matchCount": 8,
+      "uri": "Hybrid_LSTM_TA_SignalTrade.mq5"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 8
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The reversal logic is properly guarded.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The code correctly skips the reversal block when `InpReversalClosePctOfTp` is less than or equal to zero. If users set `InpReversalClosePctOfTp` to 0 and still observe closures resembling "reversal from peak," they are likely experiencing either take profit, hard stop, or trail logic. Trail logic closes positions when `pnl < trailFloor`, where `trailFloor = peak * (1 - trail%/100)`. This behavior mimics reversal closures, causing user confusion. Note that trail logic is not disabled by setting `InpReversalClosePctOfTp` to zero. Only the reversal rule is disabled when `InpReversalClosePctOfTp` is set to zero. However, users may still experience closures resembling "reversal from peak" due to take profit, hard stop, or trail logic. Trail logic closes positions when `pnl < trailFloor`, where `trailFloor = peak * (1 - trail%/100)`, which can mimic reversal closures and cause confusion. The conceptual bug lies in having two features that perform similar functionsreversal and trail logicboth potentially affecting position exits.</details></think>
+
+_**Agent (default)**_
+
+Đã xác nhận: nhánh quay đầu chỉ chạy khi `InpReversalClosePctOfTp > 0`. Đang đọc phần log snapshot và comment để làm rõ với người dùng — có thể họ nhầm với **trail** (lùi từ đỉnh).
+
+
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Cp nht comment trn dng 23-24 r rng: `InpReversalClosePctOfTp=0` ch tt **quay u (giveback so vi TP$)**; **khng** tt **trail** (`InpTrailDropFromPeakPct`)  mun tt cht khi hi t nh bng % nh th t trail = 0. In LogBasketSnapshot, an else branch was added for when reversal is 0, printing a message that reversal is off. A note was also added to trail exit logs to clarify it's not related to reversal, ensuring clarity in the Experts tab. No bug was found; the distinction between trail and reversal is intentional.</details></think>
+
+_**Agent (default)**_
+
+Xác nhận logic: `InpReversalClosePctOfTp > 0` là điều kiện bắt buộc — khi = 0, nhánh quay đầu không chạy. Người dùng có thể nhầm với **Trail** (`InpTrailDropFromPeakPct`), vì cả hai đều đóng khi giá hồi từ đỉnh lãi. Cập nhật comment và thêm dòng log khi quay đầu tắt để làm rõ.
+
+
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: & "C:\Program Files\MetaTrader 5\MetaEditor64.exe" /compile:"C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5" /log:"C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade_compile.log"</summary>
+
+```bash
+& "C:\Program Files\MetaTrader 5\MetaEditor64.exe" /compile:"C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5" /log:"C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade_compile.log"
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot\\Hybrid_LSTM_TA_SignalTrade_compile.log",
+  "pattern": "Result:"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot\\Hybrid_LSTM_TA_SignalTrade_compile.log",
+  "pattern": "Result:",
+  "topFiles": [
+    {
+      "matchCount": 1,
+      "uri": "Hybrid_LSTM_TA_SignalTrade_compile.log"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 1
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+## Kết luận: **không có bug** trong điều kiện `InpReversalClosePctOfTp = 0`
+
+Trong `ManageBasket()`, nhánh **quay đầu** chỉ chạy khi **`InpReversalClosePctOfTp > 0`**:
+
+```653:671:C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5
+    if (InpReversalClosePctOfTp > 0.0 && pnl > 0.0 && g_peakBasketProfit > 0.0) {
+        const double givebackUsd = tpAbs * (InpReversalClosePctOfTp / 100.0);
+        const double reversalFloor = g_peakBasketProfit - givebackUsd;
+        if (pnl <= reversalFloor) {
+            ...
+            LogBasketExitBanner("Chốt quay đầu (hồi lãi từ đỉnh)", "Reversal exit (giveback vs TP$)", ...
+```
+
+Khi đặt **0**, toàn bộ khối này **không được gọi** → EA **không** đóng vì luật “quay đầu so với mốc TP$”.
+
+---
+
+### Vì sao vẫn thấy đóng sớm / “như quay đầu”?
+
+Còn **ba** luật khác vẫn đóng basket:
+
+| Luật | Input | Khi nào đóng |
+|------|--------|----------------|
+| **TP theo equity** | `InpTakeProfitEquityPct` | P+L ròng ≥ mốc TP ($) |
+| **Cắt lỗ cứng** | `InpMaxLossEquityPct` | P+L ≤ −mốc lỗ ($) |
+| **Trail** | `InpTrailDropFromPeakPct` | P+L ≥ 0 và P+L **lùi % so với đỉnh** đã ghi nhận |
+
+**Trail** cũng là “chốt khi giá hồi từ đỉnh lãi”, nhưng **khác** quay đầu (so **% đỉnh**, không so với **tpAbs × %**).  
+`InpReversalClosePctOfTp = 0` **không** tắt trail. Muốn tắt kiểu đóng theo lùi từ đỉnh bằng % đỉnh → đặt **`InpTrailDropFromPeakPct = 0`**.
+
+Banner khi đóng đã khác nhau: **“Chốt trail (lùi từ đỉnh lãi)”** vs **“Chốt quay đầu …”** — xem Experts để biết nhánh nào.
+
+---
+
+### Đã chỉnh trong code
+
+1. **Comment** hai input: làm rõ trail và quay đầu là **hai luật độc lập**.  
+2. **Log basket**: khi quay đầu không áp dụng, in một dòng **“Quay đầu (vs mốc TP$): TẮT …”** để không còn hiểu nhầm là EA vẫn đang dùng luật đó.
+
+Biên dịch: **0 errors, 0 warnings**.

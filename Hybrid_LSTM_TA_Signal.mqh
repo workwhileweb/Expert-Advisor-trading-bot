@@ -9,32 +9,31 @@ enum ENUM_HYBRID_LANG {
     HYBRID_LANG_EN = 1
 };
 
-//--- Ngôn ngữ thông báo log (VI/EN)
-input ENUM_HYBRID_LANG InpLanguage = HYBRID_LANG_VI;
-//--- Số nến OHLC tải về để quét hỗ trợ/kháng cự và mô hình nến
-input int InpLookbackBars = 80;
-//--- Độ dài chuỗi đầu vào LSTM (số nến liên tiếp); phải khớp mô hình ONNX nếu bật ONNX
-input int InpLstmSequence = 48;
-//--- Số neuron ẩn của LSTM nhúng (chỉ dùng khi không chạy ONNX)
-input int InpLstmHidden = 12;
-//--- Ngưỡng pip: giá cách mức S/R trong phạm vi này được coi là “gần” mức
-input double InpSrTouchPips = 15.0;
-//--- Số lần chạm tối thiểu để chấp nhận một mức hỗ trợ hoặc kháng cự
-input int InpSrMinTouches = 2;
-//--- Bán kính vùng (pip) gom các đáy/đỉnh cùng một mức S/R
-input double InpSrZonePips = 8.0;
-//--- Bật log dự đoán mỗi khi hình thành nến mới
-input bool InpLogEveryBar = true;
-//--- Chu kỳ log theo giây (0 = không quét theo giây, chỉ theo nến mới nếu bật InpLogEveryBar)
-input int InpLogIntervalSeconds = 0;
-//--- Ghi thêm dự đoán ra file CSV trong thư mục MQL5/Files
-input bool InpWriteCsv = false;
-//--- Tên file CSV khi bật InpWriteCsv
-input string InpCsvFileName = "hybrid_lstm_ta_log.csv";
-//--- Nhãn phân nhóm tham số ONNX (không ảnh hưởng logic)
-input string InpOnnxSettings = "=== ONNX LSTM ===";
-//--- Bật suy luận LSTM từ file ONNX theo symbol/khung thời gian; tắt thì dùng LSTM nhúng
-input bool InpUseOnnxModel = false;
+input ENUM_HYBRID_LANG InpLanguage = HYBRID_LANG_VI; //--- Ngôn ngữ thông báo log (VI/EN)
+
+input int InpLookbackBars = 80; //--- Số nến OHLC tải về để quét hỗ trợ/kháng cự và mô hình nến
+
+input int InpLstmSequence = 48; //--- Độ dài chuỗi đầu vào LSTM (số nến liên tiếp); phải khớp mô hình ONNX nếu bật ONNX
+
+input int InpLstmHidden = 12; //--- Số neuron ẩn của LSTM nhúng (chỉ dùng khi không chạy ONNX)
+
+input double InpSrTouchPips = 15.0; //--- Ngưỡng pip: giá cách mức S/R trong phạm vi này được coi là “gần” mức
+
+input int InpSrMinTouches = 2; //--- Số lần chạm tối thiểu để chấp nhận một mức hỗ trợ hoặc kháng cự
+
+input double InpSrZonePips = 8.0; //--- Bán kính vùng (pip) gom các đáy/đỉnh cùng một mức S/R
+
+input bool InpLogEveryBar = true; //--- Bật log dự đoán mỗi khi hình thành nến mới
+
+input int InpLogIntervalSeconds = 0; //--- Chu kỳ log theo giây (0 = không quét theo giây, chỉ theo nến mới nếu bật InpLogEveryBar)
+
+input bool InpWriteCsv = false; //--- Ghi thêm dự đoán ra file CSV trong thư mục MQL5/Files
+
+input string InpCsvFileName = "hybrid_lstm_ta_log.csv"; //--- Tên file CSV khi bật InpWriteCsv
+
+input string InpOnnxSettings = "=== ONNX LSTM ==="; //--- Nhãn phân nhóm tham số ONNX (không ảnh hưởng logic)
+
+input bool InpUseOnnxModel = false; //--- Bật suy luận LSTM từ file ONNX theo symbol/khung thời gian; tắt thì dùng LSTM nhúng
 
 #define LSTM_FEAT 5
 #define ONNX_MODEL_PREFIX "hybrid_lstm_"
@@ -525,11 +524,40 @@ bool ResolveOnnxProfileForChart(string& modelFile, string& symbolKey, ENUM_TIMEF
     period = _Period;
     modelFile = "";
 
-    const int profileIndex = FindOnnxProfileIndex(symbolKey, period);
+    int profileIndex = FindOnnxProfileIndex(symbolKey, period);
+
+    // Chart symbol often has broker suffix (e.g. XAUUSDm → XAUUSDM) while ONNX files use base (XAUUSD).
+    // NormalizeSymbolKey keeps trailing letters, so XAUUSDM no longer matches catalog key XAUUSD.
+    if (profileIndex < 0) {
+        int bestLen = 0;
+        int bestIdx = -1;
+        for (int i = 0; i < ArraySize(g_onnxProfiles); i++) {
+            if (g_onnxProfiles[i].period != period)
+                continue;
+            const string pk = g_onnxProfiles[i].symbolKey;
+            if (StringLen(pk) < 4)
+                continue;
+            if (StringLen(symbolKey) <= StringLen(pk))
+                continue;
+            if (StringFind(symbolKey, pk) != 0)
+                continue;
+            const string rest = StringSubstr(symbolKey, StringLen(pk));
+            const int restLen = StringLen(rest);
+            if (restLen < 1 || restLen > 5)
+                continue;
+            if (StringLen(pk) > bestLen) {
+                bestLen = StringLen(pk);
+                bestIdx = i;
+            }
+        }
+        profileIndex = bestIdx;
+    }
+
     if (profileIndex < 0)
         return false;
 
     modelFile = g_onnxProfiles[profileIndex].fileName;
+    symbolKey = g_onnxProfiles[profileIndex].symbolKey;
     return (StringLen(modelFile) > 0);
 }
 

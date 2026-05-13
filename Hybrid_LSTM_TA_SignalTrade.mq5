@@ -4,7 +4,7 @@
 //+------------------------------------------------------------------+
 #property copyright "Expert-Advisor-trading-bot"
 #property version "1.00"
-#property description "LSTM+TA; lot mồi/nhồi = % của 1.00 lot; hedge = % lot so với lot mồi."
+#property description "LSTM+TA; lot mồi/nhồi = % của 1.00 lot; TP/SL basket = % giá trị vị thế lệnh mồi (lot×contract×giá); hedge = % lot so với lot mồi."
 
 #include <Trade/Trade.mqh>
 #include "Hybrid_LSTM_TA_Signal.mqh"
@@ -12,21 +12,23 @@
 input group "=== Quét tín hiệu (khi không có basket) ===" input bool InpHybridOnNewBar = true; // Quét khi có nến mới
 input int InpHybridScanSeconds = 1;                                                            // Quét tối thiểu mỗi N giây (0 = tắt, chỉ nến mới nếu bật trên)
 
-input group "=== Giao dịch ===" input ulong InpMagic = 910027;
+input group "=== Giao dịch ==="
+input ulong InpMagic = 910027;
 input int InpSlippagePoints = 30;
 input double InpBaitLotPct = 10.0;               // % của 1.00 lot (10 = 0.10 lot) — lệnh mồi & nhồi
 input int InpMaxMartingaleAdds = 2;              // Số lệnh nhồi thêm (tổng tối đa = 1 + giá trị này)
 input double InpMartingaleStepPips = 20.0;       // Khi FromPrevLegPips=0: giá_mồi ± n×pip (n=số leg cùng chiều; BUY −, SELL +)
 input double InpMartingaleFromPrevLegPips = 0.0; // 0=tắt. >0: nhồi khi giá đi thêm X pip bất lợi so với giá vào leg cùng chiều mới nhất (mồi hoặc nhồi trước)
-input double InpTakeProfitEquityPct = 5.0;       // Chốt khi P+L ròng >= equity×%/100 ($). % nhỏ hoặc equity nhỏ → mốc $ nhỏ → dễ chốt rất nhanh
-input double InpMaxLossEquityPct = 50.0;         // Đóng khi P+L ròng <= −equity×%/100 ($). Mặc định −50% equity (xa); giảm % → cắt sớm hơn
-input double InpTrailDropFromPeakPct = 5.0;      // Khi P+L ròng dương: đỉnh đã đạt − giảm % từ đỉnh → chốt (vd đỉnh 100→sàn 95). % nhỏ → chốt sớm khi hồi nhẹ
-input double InpReversalClosePctOfTp = 5.0;      // 0=tắt. P+L>0: hồi từ đỉnh ≥ (mốc TP $ × %/100) → đóng. % nhỏ hoặc equity nhỏ → đóng nhanh khi giá quay đầu
+input double InpTakeProfitBaitPct = 20.0;        // Chốt lời basket: mốc $ = giá trị lệnh mồi × %/100 (giá trị = |lot×SYMBOL_TRADE_CONTRACT_SIZE×giá mở mồi|)
+input double InpMaxLossBaitPct = 20.0;           // Cắt lỗ: |lỗ| tối đa $ = cùng công thức giá trị lệnh mồi × %/100
 input bool InpUseHedge = true;                   // Tới max nhồi + giá vượt thêm X pip: mở hedge ngược
 input double InpHedgeBeyondPips = 10.0;          // Pip vượt qua giá vào cuối (ngược chiều lệnh chính)
 input double InpHedgeLotPctOfBait = 500.0;       // % lot so với lot lệnh mồi (500 = 5×) — tiền vào hedge quay đầu
 input int InpBasketLogIntervalSec = 5;           // Mỗi N giây in trạng thái basket (0 = mỗi lần quét)
-input int InpLogMaxChunkChars = 900;             // Chia dòng log dài (0 = một dòng)
+
+input group "=== bỏ qua ===" input double InpTrailDropFromPeakPct = 0; // Chốt trail: P+L≥0 và P+L < đỉnh×(1−%/100). Độc lập với InpReversalClosePctOfTp. 0=tắt trail. Dễ nhầm với quay đầu — xem dòng dưới
+input double InpReversalClosePctOfTp = 0;                              // Chốt quay đầu (giveback so với mốc TP$): chỉ khi >0. 0=tắt hoàn toàn luật này (KHÔNG tắt trail ở dòng trên)
+input int InpLogMaxChunkChars = 900;                                   // Chia dòng log dài (0 = một dòng)
 
 input group "=== Panel trên chart ===" input bool InpShowPanel = false; // Bảng thông tin thay cho log dài
 input int InpPanelCorner = 0;                                           // 0=trên-trái 1=trên-phải 2=dưới-trái 3=dưới-phải (CORNER_*)
@@ -46,9 +48,12 @@ datetime g_lastHybridScanTime = 0;
 double g_peakBasketProfit = 0.0;
 bool g_hedgePlaced = false;
 datetime g_lastBasketStatusLog = 0;
-double g_baitLotVolume = 0.0; // lot lệnh mồi vừa mở (cho tỉ lệ hedge)
-double g_baitOpenPrice = 0.0; // giá vào mồi — mốc nhồi theo n×pip
-bool g_basketBuy = true;      // chiều basket (khớp lệnh mồi)
+double g_baitLotVolume = 0.0;        // lot lệnh mồi vừa mở (cho tỉ lệ hedge)
+double g_baitOpenPrice = 0.0;        // giá vào mồi — mốc nhồi theo n×pip
+bool g_basketBuy = true;             // chiều basket (khớp lệnh mồi)
+double g_basketTpMoney = 0.0;        // mốc TP $ khóa theo basket (P+L ròng >= giá trị này)
+double g_basketLossMoney = 0.0;      // mốc |lỗ| $ khóa (P+L <= −giá trị này); luôn dương
+double g_basketBaitValueMoney = 0.0; // ref $ = giá trị vị thế lệnh mồi lúc khóa (notional; log/panel)
 
 int g_panel_fd = 0;
 double g_panel_pu = 0.5;
@@ -139,10 +144,11 @@ void UiPanelUpdate() {
         }
     } else {
         RecoverBasketGlobalsIfNeeded();
+        EnsureBasketTpLossLocked(eq);
         const int nSame = CountOurSameDirectionBasketLegs(g_basketBuy);
         const double pnl = BasketProfitMoney();
-        const double tpAbs = eq * (InpTakeProfitEquityPct / 100.0);
-        const double lossCap = -eq * (InpMaxLossEquityPct / 100.0);
+        const double tpAbs = g_basketTpMoney;
+        const double lossCap = -g_basketLossMoney;
         const double needTp = MathMax(0.0, tpAbs - pnl);
         const double roomLoss = MathMax(0.0, pnl - lossCap);
 
@@ -201,6 +207,35 @@ double VolumeFromLotPercentOfOneLot(const double lotPct) {
 double HedgeVolumeFromBaitLot() {
     const double baitRef = (g_baitLotVolume > 0.0) ? g_baitLotVolume : VolumeFromLotPercentOfOneLot(InpBaitLotPct);
     return NormalizeVolumeLocal(baitRef * (InpHedgeLotPctOfBait / 100.0));
+}
+
+// Giá trị vị thế lệnh mồi (notional): |lot × SYMBOL_TRADE_CONTRACT_SIZE × giá mở|. Fallback: OrderCalcMargin nếu không tính được.
+bool BaitOrderNotionalMoneyAccount(double& outRefMoney) {
+    outRefMoney = 0.0;
+    double vol = g_baitLotVolume;
+    if (vol <= 0.0)
+        vol = VolumeFromLotPercentOfOneLot(InpBaitLotPct);
+    double px = g_baitOpenPrice;
+    if (px <= 0.0) {
+        px = SymbolInfoDouble(_Symbol, SYMBOL_BID);
+        if (px <= 0.0)
+            px = SymbolInfoDouble(_Symbol, SYMBOL_LAST);
+    }
+    if (vol <= 0.0 || px <= 0.0)
+        return false;
+    const double cs = SymbolInfoDouble(_Symbol, SYMBOL_TRADE_CONTRACT_SIZE);
+    const double nominal = MathAbs(vol * cs * px);
+    if (nominal > 0.0 && MathIsValidNumber(nominal)) {
+        outRefMoney = nominal;
+        return true;
+    }
+    const ENUM_ORDER_TYPE ot = g_basketBuy ? ORDER_TYPE_BUY : ORDER_TYPE_SELL;
+    double margin = 0.0;
+    if (OrderCalcMargin(ot, _Symbol, vol, px, margin) && margin > 0.0 && MathIsValidNumber(margin)) {
+        outRefMoney = margin;
+        return true;
+    }
+    return false;
 }
 
 int CountOurSameDirectionBasketLegs(const bool basketBuy) {
@@ -270,6 +305,27 @@ bool OldestOurPosition(ulong& ticket, double& openPrice, datetime& openTime, lon
     return (ticket != 0);
 }
 
+void LockBasketTpLossFromBait() {
+    double refMoney = 0.0;
+    if (!BaitOrderNotionalMoneyAccount(refMoney) || refMoney <= 0.0)
+        refMoney = 1.0;
+    g_basketBaitValueMoney = refMoney;
+    g_basketTpMoney = refMoney * (InpTakeProfitBaitPct / 100.0);
+    g_basketLossMoney = refMoney * (InpMaxLossBaitPct / 100.0);
+}
+
+void EnsureBasketTpLossLocked(const double /*eqHintIgnored*/) {
+    if (g_basketTpMoney > 0.0 && g_basketLossMoney > 0.0)
+        return;
+    LockBasketTpLossFromBait();
+}
+
+void ResetBasketMoneyRules() {
+    g_basketTpMoney = 0.0;
+    g_basketLossMoney = 0.0;
+    g_basketBaitValueMoney = 0.0;
+}
+
 void RecoverBasketGlobalsIfNeeded() {
     if (g_baitOpenPrice > 0.0)
         return;
@@ -281,6 +337,9 @@ void RecoverBasketGlobalsIfNeeded() {
         return;
     g_baitOpenPrice = op;
     g_basketBuy = (typ == POSITION_TYPE_BUY);
+    if (PositionSelectByTicket(tk))
+        g_baitLotVolume = PositionGetDouble(POSITION_VOLUME);
+    EnsureBasketTpLossLocked(0.0);
 }
 
 int CountOurPositions() {
@@ -396,13 +455,15 @@ void LogBasketSnapshot(const int nPositions, const double pnl, const double eq,
     Print(L("Cộng P+L các lệnh đang lãi: ", "Sum profitable legs: "), DoubleToString(sumWin, 2), " ", cur);
     Print(L("Cộng P+L các lệnh đang lỗ: ", "Sum losing legs: "), DoubleToString(sumLoss, 2), " ", cur);
     Print("---");
-    Print(L("Mốc chốt lời (", "Take-profit ("), DoubleToString(InpTakeProfitEquityPct, 1),
-          L("% equity): ~", "% equity): ~"), DoubleToString(tpAbsDollar, 2), " ", cur);
+    Print(L("Mốc chốt lời ($ cố định theo basket): ", "Take-profit (basket-locked $): "),
+          DoubleToString(tpAbsDollar, 2), " ", cur,
+          L(" — ref mồi ", " — bait ref "), DoubleToString(g_basketBaitValueMoney, 2), " ", cur,
+          L(" × ", " × "), DoubleToString(InpTakeProfitBaitPct, 1), L("% TP", "% TP"));
     Print(L("Cần thêm ~", "Need ~"), DoubleToString(MathMax(0.0, needMoreForTp), 2), " ", cur,
           L(" P+L ròng để đạt mốc chốt lời.", " net P+L to reach take-profit."));
-    Print(L("Mốc đóng khi lỗ (", "Hard loss cut ("), DoubleToString(InpMaxLossEquityPct, 1),
-          L("% equity): ~", "% equity): ~"), DoubleToString(lossCapDollar, 2), " ", cur,
-          L(" P+L ròng.", " net P+L."));
+    Print(L("Mốc đóng khi lỗ ($ cố định theo basket): ", "Hard loss cut (basket-locked $): "),
+          DoubleToString(lossCapDollar, 2), " ", cur,
+          L(" — |lỗ| = ref × ", " — |loss| = ref × "), DoubleToString(InpMaxLossBaitPct, 1), L("% SL", "% SL"));
     Print(L("Còn ~", "Headroom ~"), DoubleToString(MathMax(0.0, roomToHardLoss), 2), " ", cur,
           L(" trước khi chạm mốc lỗ (từ P+L hiện tại).", " before hitting loss cut (from current net P+L)."));
 
@@ -427,6 +488,9 @@ void LogBasketSnapshot(const int nPositions, const double pnl, const double eq,
               L(" − ", " − "), DoubleToString(givebackUsd, 2),
               L(" = ", " = "), DoubleToString(InpReversalClosePctOfTp, 1),
               L("%×mốc TP$).", "%×TP$)."));
+    } else {
+        Print(L("Quay đầu (vs mốc TP$): TẮT — InpReversalClosePctOfTp≤0 hoặc chưa có đỉnh lãi.",
+                "Reversal (vs TP$ target): OFF — InpReversalClosePctOfTp≤0 or no profit peak yet."));
     }
 
     Print(L("Nhồi tối đa ", "Max stack "), maxTotalPositions, L(" lệnh | hedge: ", " legs | hedge: "),
@@ -572,6 +636,7 @@ void TryOpenBaitFromSignal() {
             if (LatestOurPosition(rtk, rop, rot, rty))
                 g_baitOpenPrice = rop;
         }
+        LockBasketTpLossFromBait();
     }
 }
 
@@ -581,12 +646,13 @@ void ManageBasket() {
         return;
 
     RecoverBasketGlobalsIfNeeded();
+    const double eq = MathMax(AccountInfoDouble(ACCOUNT_EQUITY), 1.0);
+    EnsureBasketTpLossLocked(eq);
     const int nSame = CountOurSameDirectionBasketLegs(g_basketBuy);
 
-    const double eq = MathMax(AccountInfoDouble(ACCOUNT_EQUITY), 1.0);
     const double pnl = BasketProfitMoney();
-    const double tpAbs = eq * (InpTakeProfitEquityPct / 100.0);
-    const double lossCap = -eq * (InpMaxLossEquityPct / 100.0);
+    const double tpAbs = g_basketTpMoney;
+    const double lossCap = -g_basketLossMoney;
 
     // Chỉ ghi nhận đỉnh khi lãi đủ lớn so với nhiễu (tránh đỉnh ~0 làm trailFloor cực nhỏ).
     const double minPeakProfitMoney = MathMax(tpAbs * 0.0001, eq * 1e-6);
@@ -595,15 +661,15 @@ void ManageBasket() {
 
     if (pnl >= tpAbs) {
         const string cur = AccountInfoString(ACCOUNT_CURRENCY);
-        string dVi = "Luật: đóng khi P+L ròng >= equity × (InpTakeProfitEquityPct / 100).\n";
-        dVi += "Input InpTakeProfitEquityPct = " + DoubleToString(InpTakeProfitEquityPct, 2) + "% → mốc TP tiền = " + DoubleToString(tpAbs, 2) + " " + cur + ".\n";
-        dVi += "Kiểm tra: P+L " + DoubleToString(pnl, 2) + " >= " + DoubleToString(tpAbs, 2) + " (" + cur + ").\n";
-        dVi += "Vì sao dễ chốt nhanh: mốc TP là một phần equity hiện tại ($); equity nhỏ hoặc lot lớn → ít pip đã đủ $. Muốn khó chốt hơn: tăng InpTakeProfitEquityPct hoặc giảm lot.";
-        string dEn = "Rule: close when net P+L >= equity × (InpTakeProfitEquityPct / 100).\n";
-        dEn += "Input InpTakeProfitEquityPct = " + DoubleToString(InpTakeProfitEquityPct, 2) + "% → TP target = " + DoubleToString(tpAbs, 2) + " " + cur + ".\n";
+        string dVi = "Luật: đóng khi P+L ròng >= mốc TP $ đã khóa khi mở basket.\n";
+        dVi += "Khóa: ref lệnh mồi " + DoubleToString(g_basketBaitValueMoney, 2) + " " + cur + " × " + DoubleToString(InpTakeProfitBaitPct, 2) + "% → TP = " + DoubleToString(tpAbs, 2) + " " + cur + ".\n";
+        dVi += "Kiểm tra: P+L " + DoubleToString(pnl, 2) + " >= " + DoubleToString(tpAbs, 2) + ".\n";
+        dVi += "Ref = giá trị vị thế lệnh mồi (lot×contract×giá mở); muốn đổi mốc: chỉnh % trước basket mới.";
+        string dEn = "Rule: close when net P+L >= basket-locked TP $.\n";
+        dEn += "Locked: bait ref " + DoubleToString(g_basketBaitValueMoney, 2) + " " + cur + " × " + DoubleToString(InpTakeProfitBaitPct, 2) + "% → TP = " + DoubleToString(tpAbs, 2) + " " + cur + ".\n";
         dEn += "Check: P+L " + DoubleToString(pnl, 2) + " >= " + DoubleToString(tpAbs, 2) + ".\n";
-        dEn += "Why fast: TP is a fraction of current equity in money; small equity or large lot reaches $ quickly. Raise InpTakeProfitEquityPct or reduce volume for slower exits.";
-        LogBasketExitBanner("Chốt lời (TP theo % equity)", "Take profit (% equity)", eq, pnl, cur, dVi, dEn);
+        dEn += "Ref = bait notional (lot×contract×open); change % before a new basket.";
+        LogBasketExitBanner("Chốt lời (TP $ từ % lệnh mồi)", "Take profit (locked $ from bait %)", eq, pnl, cur, dVi, dEn);
         CloseAllOurPositionsAndPendings();
         g_peakBasketProfit = 0.0;
         g_hedgePlaced = false;
@@ -612,15 +678,15 @@ void ManageBasket() {
 
     if (pnl <= lossCap) {
         const string cur = AccountInfoString(ACCOUNT_CURRENCY);
-        string dVi = "Luật: đóng khi P+L ròng <= −equity × (InpMaxLossEquityPct / 100).\n";
-        dVi += "Input InpMaxLossEquityPct = " + DoubleToString(InpMaxLossEquityPct, 2) + "% → mốc cắt lỗ = " + DoubleToString(lossCap, 2) + " " + cur + ".\n";
+        string dVi = "Luật: đóng khi P+L ròng <= −mốc |lỗ| $ đã khóa khi mở basket.\n";
+        dVi += "Khóa: ref lệnh mồi " + DoubleToString(g_basketBaitValueMoney, 2) + " " + cur + " × " + DoubleToString(InpMaxLossBaitPct, 2) + "% → cắt tại P+L = " + DoubleToString(lossCap, 2) + " " + cur + ".\n";
         dVi += "Kiểm tra: P+L " + DoubleToString(pnl, 2) + " <= " + DoubleToString(lossCap, 2) + ".\n";
-        dVi += "Mặc định 50% equity là xa; nếu giảm input (vd 5–10%) thì cắt rất nhanh khi basket âm.";
-        string dEn = "Rule: close when net P+L <= −equity × (InpMaxLossEquityPct / 100).\n";
-        dEn += "Input InpMaxLossEquityPct = " + DoubleToString(InpMaxLossEquityPct, 2) + "% → stop level = " + DoubleToString(lossCap, 2) + " " + cur + ".\n";
+        dVi += "Giảm InpMaxLossBaitPct để cắt sớm hơn (mốc $ thu hẹp).";
+        string dEn = "Rule: close when net P+L <= −basket-locked loss magnitude $.\n";
+        dEn += "Locked: bait ref " + DoubleToString(g_basketBaitValueMoney, 2) + " " + cur + " × " + DoubleToString(InpMaxLossBaitPct, 2) + "% → cut at " + DoubleToString(lossCap, 2) + " " + cur + ".\n";
         dEn += "Check: P+L " + DoubleToString(pnl, 2) + " <= " + DoubleToString(lossCap, 2) + ".\n";
-        dEn += "Lower % makes hard stop fire sooner.";
-        LogBasketExitBanner("Cắt lỗ cứng (% equity)", "Hard stop loss (% equity)", eq, pnl, cur, dVi, dEn);
+        dEn += "Lower InpMaxLossBaitPct for a tighter $ stop.";
+        LogBasketExitBanner("Cắt lỗ cứng ($ từ % lệnh mồi)", "Hard stop (locked $ from bait %)", eq, pnl, cur, dVi, dEn);
         CloseAllOurPositionsAndPendings();
         g_peakBasketProfit = 0.0;
         g_hedgePlaced = false;
@@ -658,7 +724,7 @@ void ManageBasket() {
             string dVi = "Luật: P+L > 0 và P+L <= đỉnh − (mốc TP $ × InpReversalClosePctOfTp/100).\n";
             dVi += "Mốc TP $ (tpAbs) = " + DoubleToString(tpAbs, 2) + "; Input InpReversalClosePctOfTp = " + DoubleToString(InpReversalClosePctOfTp, 2) + "% → ngưỡng hồi $ = " + DoubleToString(givebackUsd, 2) + ".\n";
             dVi += "Đỉnh " + DoubleToString(g_peakBasketProfit, 2) + " → sàn quay đầu " + DoubleToString(reversalFloor, 2) + " " + cur + "; P+L hiện " + DoubleToString(pnl, 2) + ".\n";
-            dVi += "Chốt nhanh khi equity nhỏ (tpAbs nhỏ) hoặc % nhỏ → ngưỡng $ nhỏ; tắt bằng InpReversalClosePctOfTp=0.";
+            dVi += "Chốt khi P+L hồi đủ so với đỉnh; mốc TP $ là giá trị khóa theo basket (không trôi theo equity). Tắt: InpReversalClosePctOfTp=0.";
             string dEn = "Rule: net profit > 0 and P+L <= peak − (tpAbs × InpReversalClosePctOfTp/100).\n";
             dEn += "tpAbs = " + DoubleToString(tpAbs, 2) + "; InpReversalClosePctOfTp = " + DoubleToString(InpReversalClosePctOfTp, 2) + "% → giveback $ = " + DoubleToString(givebackUsd, 2) + ".\n";
             dEn += "Peak / reversal floor / current P+L as above. Set InpReversalClosePctOfTp=0 to disable.";
@@ -784,6 +850,7 @@ void ProcessScan() {
     g_baitLotVolume = 0.0;
     g_baitOpenPrice = 0.0;
     g_basketBuy = true;
+    ResetBasketMoneyRules();
 
     if (!ShouldPullHybridNow(isNewBar))
         return;
@@ -809,6 +876,15 @@ int OnInit() {
         return INIT_PARAMETERS_INCORRECT;
     }
 
+    if (InpTakeProfitBaitPct <= 0.0) {
+        Print(L("InpTakeProfitBaitPct phải > 0.", "InpTakeProfitBaitPct must be > 0."));
+        return INIT_PARAMETERS_INCORRECT;
+    }
+    if (InpMaxLossBaitPct <= 0.0) {
+        Print(L("InpMaxLossBaitPct phải > 0.", "InpMaxLossBaitPct must be > 0."));
+        return INIT_PARAMETERS_INCORRECT;
+    }
+
     InitLstmWeights();
     LoadOnnxModel();
     g_lastBarTime = iTime(_Symbol, _Period, 0);
@@ -826,6 +902,7 @@ int OnInit() {
     g_baitOpenPrice = 0.0;
     g_basketBuy = true;
     g_panel_have_signal = false;
+    ResetBasketMoneyRules();
 
     CloseAllOurPositionsAndPendings();
     Print(L("Khởi tạo: đã hủy pending và đóng position của EA (magic).",
