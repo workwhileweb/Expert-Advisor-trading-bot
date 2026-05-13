@@ -1,0 +1,11 @@
+InpHedgeEquityPct (mặc định 5.0)
+Ý nghĩa: Khi EA đã nhồi đủ số lệnh tối đa (1 + InpMaxMartingaleAdds) mà basket vẫn lỗ, và giá đi thêm InpHedgeBeyondPips pip so với giá mở của lệnh mở sau cùng (theo chiều bất lợi), EA có thể mở một lệnh hedge ngược chiều (nếu InpUseHedge = true và chưa hedge lần nào trong chu kỳ đó).
+5.0 = EA ước lượng khối lượng hedge sao cho ký quỹ (margin) của lệnh đó gần với 5% equity hiện tại — cùng cách suy nghĩ với lệnh mồi dùng InpBaitEquityPct (dùng OrderCalcMargin + bước lot tối thiểu).
+Lưu ý: Đây là % equity để “neo” margin, không phải “5% tài khoản chắc chắn thắng/thua”. Hedge chỉ giảm rủi ro một phần hoặc đảo chiều áp lực P+L; tăng % → lot hedge lớn hơn (nếu broker cho phép theo SYMBOL_VOLUME_MAX).
+
+InpBasketLogIntervalSec (mặc định 5)
+Ý nghĩa: Khi đang có basket (có position của EA trên symbol), EA gọi ManageBasket() mỗi giây (OnTimer), nhưng không in log snapshot mỗi lần để tránh spam Experts.
+5 = tối đa một bản log basket chi tiết (P+L ròng, tổng leg lãi/lỗ, khoảng cách tới mốc chốt lời / stop lỗ / trail, v.v.) cách nhau ít nhất 5 giây.
+0 = mỗi lần ManageBasket() chạy và tới nhánh log (khi vẫn còn lệnh) đều in — tức gần như mỗi giây một lần, log rất dày.
+Tăng giá trị (ví dụ 30–60) nếu bạn chỉ cần theo dõi thưa hơn.
+Tóm lại: InpHedgeEquityPct điều chỉnh độ lớn lệnh hedge; InpBasketLogIntervalSec điều chỉnh tần suất in log trạng thái basket, không đổi logic vào lệnh/chốt lỗ.

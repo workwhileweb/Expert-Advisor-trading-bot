@@ -25,7 +25,7 @@
       "end_timestamp": "2026-05-12T15:32:36+07:00",
       "markdown_size_bytes": 179557,
       "provider": "cursoride",
-      "last_updated": "2026-05-13T03:40:59Z"
+      "last_updated": "2026-05-13T04:37:08Z"
     },
     "4276a57b-eae8-4d07-b86e-c0079cd6baf2": {
       "user_message_count": 1,
@@ -43,7 +43,7 @@
       "end_timestamp": "2026-05-11T10:05:39+07:00",
       "markdown_size_bytes": 10144,
       "provider": "cursoride",
-      "last_updated": "2026-05-13T03:40:59Z"
+      "last_updated": "2026-05-13T04:37:08Z"
     },
     "57ebbce4-d7bc-430a-bd78-d63381b17732": {
       "user_message_count": 3,
@@ -55,13 +55,13 @@
       "last_updated": "2026-05-11T06:49:52Z"
     },
     "59bf3856-e40c-4349-99ef-a1c523cc2c00": {
-      "user_message_count": 2,
-      "agent_message_count": 63,
+      "user_message_count": 14,
+      "agent_message_count": 288,
       "start_timestamp": "2026-05-13T10:40:25+07:00",
       "end_timestamp": "2026-05-13T10:40:25+07:00",
-      "markdown_size_bytes": 62897,
+      "markdown_size_bytes": 247861,
       "provider": "cursoride",
-      "last_updated": "2026-05-13T03:52:59Z"
+      "last_updated": "2026-05-13T07:56:04Z"
     },
     "5c1124c1-e317-4a13-b3ed-94e806276f93": {
       "user_message_count": 1,
@@ -88,7 +88,7 @@
       "end_timestamp": "2026-05-12T09:42:09+07:00",
       "markdown_size_bytes": 24176,
       "provider": "cursoride",
-      "last_updated": "2026-05-13T03:40:59Z"
+      "last_updated": "2026-05-13T04:37:08Z"
     },
     "86161cfc-f40a-4a0c-980c-98cf75b88eac": {
       "user_message_count": 2,
@@ -106,7 +106,7 @@
       "end_timestamp": "2026-05-12T20:31:12+07:00",
       "markdown_size_bytes": 44304,
       "provider": "cursoride",
-      "last_updated": "2026-05-13T03:40:59Z"
+      "last_updated": "2026-05-13T04:37:08Z"
     },
     "9f0a837c-a57c-4cf6-bed1-4eba2c6bbffe": {
       "user_message_count": 1,
@@ -115,7 +115,7 @@
       "end_timestamp": "2026-05-12T09:38:58+07:00",
       "markdown_size_bytes": 9919,
       "provider": "cursoride",
-      "last_updated": "2026-05-13T03:40:59Z"
+      "last_updated": "2026-05-13T04:37:08Z"
     },
     "9f8a6040-5a72-4ba9-b26f-8bf626271433": {
       "user_message_count": 1,
