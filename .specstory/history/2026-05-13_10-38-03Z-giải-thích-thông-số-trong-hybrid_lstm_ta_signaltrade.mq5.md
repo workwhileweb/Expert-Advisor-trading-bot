@@ -250,3 +250,668 @@ _**Agent (default)**_
 
 <think><details><summary>Thought Process</summary>
 The file has already been partially updated!</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot",
+  "pattern": "Equity|TpSlMoney|TakeProfitEquity|MaxLossEquity"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot",
+  "pattern": "Equity|TpSlMoney|TakeProfitEquity|MaxLossEquity",
+  "topFiles": [
+    {
+      "matchCount": 1,
+      "uri": "README_en.md"
+    },
+    {
+      "matchCount": 37,
+      "uri": ".specstory\\history\\2026-05-13_03-40-25Z-new-mq5-file-for-market-signal-tracking.md"
+    },
+    {
+      "matchCount": 10,
+      "uri": "Hybrid_LSTM_TA_SignalTrade.mq5"
+    },
+    {
+      "matchCount": 1,
+      "uri": "i18n.py"
+    },
+    {
+      "matchCount": 7,
+      "uri": ".specstory\\history\\2026-05-13_09-21-44Z-market-signal-trading-strategy.md"
+    },
+    {
+      "matchCount": 6,
+      "uri": "public/HUONG_DAN_PENDING_TREAD.md"
+    },
+    {
+      "matchCount": 3,
+      "uri": ".specstory\\history\\2026-05-13_10-22-35Z-chốt-lời-và-cắt-lỗ-trong-giao-dịch.md"
+    },
+    {
+      "matchCount": 37,
+      "uri": ".specstory/history/2026-05-13_03-40-25Z-new-mq5-file-for-market-signal-tracking.md"
+    },
+    {
+      "matchCount": 6,
+      "uri": "Hybrid_LSTM_TA_SignalBarStack.mq5"
+    },
+    {
+      "matchCount": 2,
+      "uri": "bot.mq5"
+    },
+    {
+      "matchCount": 6,
+      "uri": ".specstory/history/2026-05-11_06-15-32Z-phân-tích-và-báo-cáo-bot.md"
+    },
+    {
+      "matchCount": 3,
+      "uri": ".specstory/history/2026-05-12_02-16-39Z-phân-tích-thuật-toán-trader.md"
+    },
+    {
+      "matchCount": 10,
+      "uri": ".specstory/history/2026-05-11_06-35-35Z-pending_tread.mq5-notification-behavior.md"
+    },
+    {
+      "matchCount": 3,
+      "uri": "@3.txt"
+    },
+    {
+      "matchCount": 13,
+      "uri": ".specstory\\history\\2026-05-13_10-38-03Z-giải-thích-thông-số-trong-hybrid_lstm_ta_signaltrade.mq5.md"
+    },
+    {
+      "matchCount": 3,
+      "uri": "pending_tread.md"
+    },
+    {
+      "matchCount": 8,
+      "uri": "public/THUAT_TOAN_PENDING_TREAD_CHI_TIET.md"
+    },
+    {
+      "matchCount": 2,
+      "uri": ".specstory/history/2026-05-12_02-38-58Z-giải-thích-các-thông-số-trong-pending_tread.mq5.md"
+    }
+  ],
+  "totalFiles": 18,
+  "totalMatches": 158
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The codebase already implements take-profit and stop-loss functionality using `InpTakeProfitBaitPct` and `InpMaxLossBaitPct` with a default value of 20%. The current implementation prioritizes margin as the primary reference for `BaitOrderRefMoneyAccount`, but the user requested using notional value (deal value) in account currency instead, as "gi tr lnh" in Vietnamese typically refers to notional value rather than margin. Therefore, the code should be updated to prioritize notional value over margin for this calculation. For forex trading in MQL5, calculating notional value in account currency involves using `SymbolInfoDouble(SYMBOL_TRADE_CONTRACT_SIZE)` multiplied by volume and price, though this varies for cross-currency pairs. A standard formula for position value in account currency is `vol * SymbolInfoDouble(_Symbol, SYMBOL_TRADE_CONTRACT_SIZE)`, which then needs conversion to account currency. Many EAs simplify this further by directly using contract size and volume for notional calculations. The code currently calculates notional value as `vol * SYMBOL_TRADE_CONTRACT_SIZE * px`, which approximates the notional in quote currency terms for forex but may differ from account currency. An alternative approach uses `SymbolInfoDouble(_Symbol, SYMBOL_TRADE_TICK_VALUE) / SymbolInfoDouble(_Symbol, SYMBOL_TRADE_TICK_SIZE)` to determine P&L per 1.0 lot per price move. For the users request of 20% gi tr lnh mi, Option Acalculating notional as `vol * contract_size * price`is already implemented as a fallback. The code will prioritize notional value over margin for `BaitOrderRefMoneyAccount`, as "gi tr lnh" refers to notional value. The current implementation uses `vol * contract_size * price` as a fallback for notional calculation in account currency, which aligns with standard forex practices for EURUSD and other pairs. The function will be refactored to prioritize notional value calculation, renaming it to reflect that it computes **gi tr v th** (notional) as `vol * SYMBOL_TRADE_CONTRACT_SIZE * open_price`. The margin-based `OrderCalcMargin` will be removed from the primary path since the user specified `% ca gi tr lnh mi u tin`, meaning notional value should be used. The new implementation will calculate `BaitOrderRefMoneyAccount` using the notional formula:  
+`outRefMoney = MathAbs(vol * SymbolInfoDouble(_Symbol, SYMBOL_TRADE_CONTRACT_SIZE) * px);`</details></think>
+
+_**Agent (default)**_
+
+Đang chuyển tham chiếu từ ký quỹ (OrderCalcMargin) sang giá trị vị thế (notional: lot × contract × giá) vì bạn yêu cầu % theo giá trị lệnh mồi. File đã có `InpTakeProfitBaitPct` / `InpMaxLossBaitPct` mặc định 20% — chỉnh hàm tính `ref` và mô tả cho khớp.
+
+
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot\\Hybrid_LSTM_TA_SignalTrade.mq5",
+  "pattern": "g_basketMoneyRefEquity|BaitOrderRef|Khóa:|bait ref|ref mồi|OrderCalcMargin"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot\\Hybrid_LSTM_TA_SignalTrade.mq5",
+  "pattern": "g_basketMoneyRefEquity|BaitOrderRef|Khóa:|bait ref|ref mồi|OrderCalcMargin",
+  "topFiles": [
+    {
+      "matchCount": 14,
+      "uri": "Hybrid_LSTM_TA_SignalTrade.mq5"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 14
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+I will update the #property description line 7 if it still says "equity" - I will read it first. Change BaitOrderRefMoneyAccount to calculate notional first as vol * CONTRACT_SIZE * px, falling back to OrderCalcMargin only when notional fails. For CFDs with contract size 1, price is full value; futures remain unaffected. Update input comments 22-23 to clarify "gi tr v th lnh mi (lotcontractgi), khng phi % equity". Rename log strings mentioning OrderCalcMargin to use "notional" instead. Update global variable comment. Optionally rename `g_basketMoneyRefEquity` to `g_basketBaitRefMoney`.</details></think>
+
+_**Agent (default)**_
+
+Chuyển công thức tham chiếu sang **giá trị vị thế (notional)** `lot × SYMBOL_TRADE_CONTRACT_SIZE × giá mở`, bỏ ưu tiên ký quỹ — đúng với “% giá trị lệnh mồi”. Đổi tên biến global cho rõ nghĩa.
+
+
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot",
+  "pattern": "g_basketMoneyRefEquity"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot",
+  "pattern": "g_basketMoneyRefEquity",
+  "topFiles": [
+    {
+      "matchCount": 1,
+      "uri": ".\\.specstory\\history\\2026-05-13_10-38-03Z-giải-thích-thông-số-trong-hybrid_lstm_ta_signaltrade.mq5.md"
+    },
+    {
+      "matchCount": 8,
+      "uri": ".\\Hybrid_LSTM_TA_SignalTrade.mq5"
+    }
+  ],
+  "totalFiles": 2,
+  "totalMatches": 9
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+I'll implement the `BaitOrderBaitNotionalMoney` function that calculates notional value as the product of volume, contract size, and price.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+I'll apply patches:
+1. Line 7 - update description
+2. I'll apply patches:
+1. Line 7 - update description
+2. Lines 22-23 - update input comments to say notional value (lotcontractopen price) in deposit currency terms for typical symbols
+3. Lines 212-234 - replace BaitOrderRefMoneyAccount with notional-first logic, optionally rename function to `BaitOrderNotionalMoneyAccount` 
+4. Replace g_basketMoneyRefEquity with g_basketBaitNotionalRef (money value)
+5. LockBasketTpLossFromBait uses the function - update empty check
+
+For notional calculation the standard is:
+```
+double cs = SymbolInfoDouble(_Symbol, SYMBOL_TRADE_CONTRACT_SIZE);
+outRefMoney = MathAbs(vol * cs * px);
+``` I'll apply patches:
+1. Line 7 - update description
+2. Lines 22-23 - update input comments to say notional value (lotcontractopen price) in deposit currency terms for typical symbols
+3. Lines 212-234 - replace BaitOrderRefMoneyAccount with notional-first logic, optionally rename function to `BaitOrderNotionalMoneyAccount` 
+4. Replace g_basketMoneyRefEquity with g_basketBaitNotionalRef (money value)
+5. LockBasketTpLossFromBait uses the function - update empty check
+
+For notional calculation the standard is:
+```
+double cs = SymbolInfoDouble(_Symbol, SYMBOL_TRADE_CONTRACT_SIZE);
+outRefMoney = MathAbs(vol * cs * px);
+```
+
+For symbols where profit is not linear with this product (e.g. some crosses), it's still what user asked "gi tr lnh". Fallback if cs<=0 The code calculates the notional value using contract size and price, with a fallback to estimated margin if contract size is invalid or zero. If `OrderCalcMargin` succeeds and returns a valid margin, use it as the notional value; otherwise, return false. Update all calls from `BaitOrderRefMoneyAccount` to `BaitOrderNotionalMoneyAccount`. Rename `g_basketMoneyRefEquity` to `g_basketBaitValueMoney` to clarify it represents the notional money amount. I'll use `g_basketBaitValueMoney` for the locked reference value in account currency and replace all occurrences. The EnsureBasketTpLossLocked comment for eqHintIgnored is fine, and line 147 `EnsureBasketTpLossLocked(eq)` still passes eq but ignores it, which is acceptable. For Vi log strings: "Ref = gi tr v th lnh mi (lotcontractgi m) ti kha basket; ..." and English: "Ref = bait position notional (lotcontract_sizeopen) at lock; ...". I'll also check RecoverBasketGlobalsIfNeeded, which sets g_baitOpenPrice from the OLDEST position, though bait might not be oldest if a hedge was opened.</details></think>
+
+_**Agent (default)**_
+
+Đang cập nhật: tính **notional** (giá trị vị thế) làm chuẩn; giữ **OrderCalcMargin** chỉ làm dự phòng khi không tính được notional.
+
+
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot\\Hybrid_LSTM_TA_SignalTrade.mq5",
+  "pattern": "OrderCalcMargin|ký quỹ|margin"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot\\Hybrid_LSTM_TA_SignalTrade.mq5",
+  "pattern": "OrderCalcMargin|ký quỹ|margin",
+  "topFiles": [
+    {
+      "matchCount": 6,
+      "uri": "Hybrid_LSTM_TA_SignalTrade.mq5"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 6
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+Invalid arguments:
+path: Required
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+The string to replace was not found in the file.
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Replace lines 667 and 671 with notional text.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Search for any remaining instances of the old names InpTakeProfitEquity, BaitOrderRef, and g_basketMoneyRef using grep.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot\\Hybrid_LSTM_TA_SignalTrade.mq5",
+  "pattern": "BaitOrderRef|g_basketMoneyRef|EquityPct|TpSlMoney"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot\\Hybrid_LSTM_TA_SignalTrade.mq5",
+  "pattern": "BaitOrderRef|g_basketMoneyRef|EquityPct|TpSlMoney",
+  "topFiles": [],
+  "totalFiles": 0,
+  "totalMatches": 0
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Try compiling with MetaTrader; common paths are on Windows.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: where metaeditor64 2>nul; where MetaEditor64 2>nul; Get-Command metaeditor64 -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Source</summary>
+
+```bash
+where metaeditor64 2>nul; where MetaEditor64 2>nul; Get-Command metaeditor64 -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Source
+```
+
+```
+out-file : FileStream was asked to open a device that was not a file. For support for devices like 'com1:' or 'lpt1:', 
+call CreateFile, then use the FileStream constructors that take an OS handle as an IntPtr.
+At C:\Users\workw\AppData\Local\Temp\ps-script-c6ccd64a-1398-4600-b731-678f59462625.ps1:7 char:1
++ where metaeditor64 2&gt;nul; where MetaEditor64 2&gt;nul; Get-Command metae ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OpenError: (:) [Out-File], NotSupportedException
+    + FullyQualifiedErrorId : FileOpenFailure,Microsoft.PowerShell.Commands.OutFileCommand
+ 
+out-file : FileStream was asked to open a device that was not a file. For support for devices like 'com1:' or 'lpt1:', 
+call CreateFile, then use the FileStream constructors that take an OS handle as an IntPtr.
+At C:\Users\workw\AppData\Local\Temp\ps-script-c6ccd64a-1398-4600-b731-678f59462625.ps1:7 char:27
++ where metaeditor64 2&gt;nul; where MetaEditor64 2&gt;nul; Get-Command metae ...
++                           ~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OpenError: (:) [Out-File], NotSupportedException
+    + FullyQualifiedErrorId : FileOpenFailure,Microsoft.PowerShell.Commands.OutFileCommand
+ 
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+PowerShell has an issue with the `2>nul` syntax; to resolve this, use `cmd /c where` or `Get-Command` instead.</details></think>
+
+_**Agent (default)**_
+
+Trong repo hiện tại, phần **% equity + sàn $** đã được thay bằng **`InpTakeProfitBaitPct` / `InpMaxLossBaitPct` (mặc định 20%)** rồi; phần còn thiếu so với yêu cầu “% **giá trị** lệnh mồi” là **cách tính ref**: trước đó ưu tiên **ký quỹ** (`OrderCalcMargin`), không phải giá trị vị thế.
+
+Đã chỉnh như sau:
+
+### 1. Chuẩn ref = **giá trị vị thế (notional)** lệnh mồi  
+`ref = |lot × SYMBOL_TRADE_CONTRACT_SIZE × giá mở mồi|`  
+Chỉ khi không tính được notional mới **fallback** sang `OrderCalcMargin`.
+
+### 2. Đổi tên & mô tả  
+- Biến `g_basketMoneyRefEquity` → `g_basketBaitValueMoney` (đúng nghĩa: tiền ref theo giá trị mồi).  
+- Input / `#property description` / log TP ghi rõ **notional**, bỏ wording “ký quỹ OrderCalcMargin” ở nhánh TP.
+
+### 3. Mặc định  
+`InpTakeProfitBaitPct = 20` và `InpMaxLossBaitPct = 20` — **20% giá trị vị thế lệnh mồi** (theo công thức trên).
+
+```212:236:C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5
+// Giá trị vị thế lệnh mồi (notional): |lot × SYMBOL_TRADE_CONTRACT_SIZE × giá mở|. Fallback: OrderCalcMargin nếu không tính được.
+bool BaitOrderNotionalMoneyAccount(double& outRefMoney) {
+    outRefMoney = 0.0;
+    double vol = g_baitLotVolume;
+    if (vol <= 0.0)
+        vol = VolumeFromLotPercentOfOneLot(InpBaitLotPct);
+    double px = g_baitOpenPrice;
+    if (px <= 0.0) {
+        px = SymbolInfoDouble(_Symbol, SYMBOL_BID);
+        if (px <= 0.0)
+            px = SymbolInfoDouble(_Symbol, SYMBOL_LAST);
+    }
+    if (vol <= 0.0 || px <= 0.0)
+        return false;
+    const double cs = SymbolInfoDouble(_Symbol, SYMBOL_TRADE_CONTRACT_SIZE);
+    const double nominal = MathAbs(vol * cs * px);
+    if (nominal > 0.0 && MathIsValidNumber(nominal)) {
+        outRefMoney = nominal;
+        return true;
+    }
+    const ENUM_ORDER_TYPE ot = g_basketBuy ? ORDER_TYPE_BUY : ORDER_TYPE_SELL;
+    double margin = 0.0;
+    if (OrderCalcMargin(ot, _Symbol, vol, px, margin) && margin > 0.0 && MathIsValidNumber(margin)) {
+        outRefMoney = margin;
+        return true;
+    }
+    return false;
+}
+```
+
+```304:311:C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5
+void LockBasketTpLossFromBait() {
+    double refMoney = 0.0;
+    if (!BaitOrderNotionalMoneyAccount(refMoney) || refMoney <= 0.0)
+        refMoney = 1.0;
+    g_basketBaitValueMoney = refMoney;
+    g_basketTpMoney = refMoney * (InpTakeProfitBaitPct / 100.0);
+    g_basketLossMoney = refMoney * (InpMaxLossBaitPct / 100.0);
+}
+```
+
+**Lưu ý:** Với một số công cụ, `lot×contract×giá` là **ước lượng giá trị vị thế theo spec symbol**, không phải lúc nào cũng trùng 1:1 với P+L theo từng pip trong **tiền tài khoản** (đặc biệt cặp chéo / CFD), nhưng đúng với cách trader thường gọi “% giá trị lệnh”. Môi trường máy bạn không có `metaeditor64` trên PATH nên không compile tự động được; bạn mở file trong MetaEditor và F7 để xác nhận.

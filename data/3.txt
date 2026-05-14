@@ -1,0 +1,44 @@
+"C:\Users\workw\AppData\Roaming\MetaQuotes\Terminal\D0E8209F77C8CF37AD8BF550E51FF075\MQL5\logs\20260513.log"
+
+CG	0	19:11:38.788	Matrix Milion (XAUUSDm,H1)	=== HedgeDCA Lock Side v12.00 | XAUUSDm | pt=0.001 ===
+GE	0	19:11:38.788	Matrix Milion (XAUUSDm,H1)	MultiStop=1.09 MultiLimit=1.09
+OR	0	19:11:38.788	Matrix Milion (XAUUSDm,H1)	MaxTotalLot=1.0
+JD	0	19:11:39.731	Matrix Milion (XAUUSDm,H1)	Initial orders OK
+GO	0	19:11:39.895	Matrix Milion (XAUUSDm,H1)	[LotCalc] step=0, mult=1.0900, raw=0.010000, norm=0.010000, stepLot=0.0100
+GN	0	19:11:39.978	Matrix Milion (XAUUSDm,H1)	[LotCalc] step=0, mult=1.0900, raw=0.010000, norm=0.010000, stepLot=0.0100
+JN	0	19:11:40.126	Matrix Milion (XAUUSDm,H1)	[LotCalc] step=0, mult=1.0900, raw=0.010000, norm=0.010000, stepLot=0.0100
+CM	0	19:11:40.198	Matrix Milion (XAUUSDm,H1)	[LotCalc] step=0, mult=1.0900, raw=0.010000, norm=0.010000, stepLot=0.0100
+PL	0	19:11:44.241	Matrix Milion (XAUUSDm,H1)	[LotCalc] step=1, mult=1.0900, raw=0.010900, norm=0.010000, stepLot=0.0100
+RK	0	19:11:44.315	Matrix Milion (XAUUSDm,H1)	[LotCalc] step=1, mult=1.0900, raw=0.010900, norm=0.010000, stepLot=0.0100
+MJ	0	19:11:45.863	Matrix Milion (XAUUSDm,H1)	[LotCalc] step=1, mult=1.0900, raw=0.010900, norm=0.010000, stepLot=0.0100
+FI	0	19:11:45.987	Matrix Milion (XAUUSDm,H1)	[LotCalc] step=1, mult=1.0900, raw=0.010900, norm=0.010000, stepLot=0.0100
+PO	0	19:11:50.124	Matrix Milion (XAUUSDm,H1)	[TP] No lock, BUY đạt TP: pips=162.80000000006112
+II	0	19:11:50.335	Matrix Milion (XAUUSDm,H1)	SyncGrid: Up=0 Dn=3
+RH	0	19:11:50.335	Matrix Milion (XAUUSDm,H1)	Chuyển lock sang SELL
+RE	0	19:11:52.530	Matrix Milion (XAUUSDm,H1)	[LotCalc] step=0, mult=1.0900, raw=0.010000, norm=0.010000, stepLot=0.0100
+QD	0	19:11:52.603	Matrix Milion (XAUUSDm,H1)	[LotCalc] step=0, mult=1.0900, raw=0.010000, norm=0.010000, stepLot=0.0100
+QJ	0	19:11:58.700	Matrix Milion (XAUUSDm,H1)	[TP] Locked SELL đạt TP: pips=125.0
+NS	0	19:11:58.916	Matrix Milion (XAUUSDm,H1)	SyncGrid: Up=1 Dn=0
+GR	0	19:11:58.916	Matrix Milion (XAUUSDm,H1)	Chuyển lock sang BUY, tiếp tục DCA.
+PP	0	19:12:21.333	Matrix Milion (XAUUSDm,H1)	[LotCalc] step=0, mult=1.0900, raw=0.010000, norm=0.010000, stepLot=0.0100
+KO	0	19:12:21.455	Matrix Milion (XAUUSDm,H1)	[LotCalc] step=0, mult=1.0900, raw=0.010000, norm=0.010000, stepLot=0.0100
+RJ	0	19:12:27.012	Matrix Milion (XAUUSDm,H1)	[TP] Locked BUY đạt TP: pips=655.5000000007567
+KG	0	19:12:27.231	Matrix Milion (XAUUSDm,H1)	SyncGrid: Up=0 Dn=1
+JK	0	19:12:27.231	Matrix Milion (XAUUSDm,H1)	Chuyển lock sang SELL, tiếp tục DCA.
+FG	0	19:13:14.532	Matrix Milion (XAUUSDm,H1)	[TP] Locked SELL đạt TP: pips=863.999999999578
+IG	0	19:13:14.732	Matrix Milion (XAUUSDm,H1)	Reset cycle, ready to open initial orders
+QP	0	19:13:15.237	Matrix Milion (XAUUSDm,H1)	Initial orders OK
+NK	0	19:13:15.724	Matrix Milion (XAUUSDm,H1)	[LotCalc] step=0, mult=1.0900, raw=0.010000, norm=0.010000, stepLot=0.0100
+IJ	0	19:13:15.857	Matrix Milion (XAUUSDm,H1)	[LotCalc] step=0, mult=1.0900, raw=0.010000, norm=0.010000, stepLot=0.0100
+LI	0	19:13:16.631	Matrix Milion (XAUUSDm,H1)	[LotCalc] step=0, mult=1.0900, raw=0.010000, norm=0.010000, stepLot=0.0100
+CI	0	19:13:16.762	Matrix Milion (XAUUSDm,H1)	[LotCalc] step=0, mult=1.0900, raw=0.010000, norm=0.010000, stepLot=0.0100
+OL	0	19:13:21.968	Matrix Milion (XAUUSDm,H1)	[TP] No lock, BUY đạt TP: pips=86.99999999953434
+RI	0	19:13:22.170	Matrix Milion (XAUUSDm,H1)	SyncGrid: Up=0 Dn=2
+RI	0	19:13:22.170	Matrix Milion (XAUUSDm,H1)	Chuyển lock sang SELL
+QD	0	19:13:23.456	Matrix Milion (XAUUSDm,H1)	[LotCalc] step=0, mult=1.0900, raw=0.010000, norm=0.010000, stepLot=0.0100
+OS	0	19:13:23.531	Matrix Milion (XAUUSDm,H1)	[LotCalc] step=0, mult=1.0900, raw=0.010000, norm=0.010000, stepLot=0.0100
+GS	0	19:13:24.538	Matrix Milion (XAUUSDm,H1)	[LotCalc] step=1, mult=1.0900, raw=0.010900, norm=0.010000, stepLot=0.0100
+OR	0	19:13:24.613	Matrix Milion (XAUUSDm,H1)	[LotCalc] step=1, mult=1.0900, raw=0.010900, norm=0.010000, stepLot=0.0100
+EH	0	19:13:29.649	Matrix Milion (XAUUSDm,H1)	[TP] Locked SELL đạt TP: pips=97.99999999995634
+PP	0	19:13:29.852	Matrix Milion (XAUUSDm,H1)	SyncGrid: Up=2 Dn=0
+DQ	0	19:13:29.852	Matrix Milion (XAUUSDm,H1)	Chuyển lock sang BUY, tiếp tục DCA.

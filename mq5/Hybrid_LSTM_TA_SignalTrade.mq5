@@ -24,6 +24,9 @@ input double InpMaxLossBaitPct = 20.0;           // Cắt lỗ: |lỗ| tối đa
 input bool InpUseHedge = true;                   // Tới max nhồi + giá vượt thêm X pip: mở hedge ngược
 input double InpHedgeBeyondPips = 10.0;          // Pip vượt qua giá vào cuối (ngược chiều lệnh chính)
 input double InpHedgeLotPctOfBait = 500.0;       // % lot so với lot lệnh mồi (500 = 5×) — tiền vào hedge quay đầu
+input bool InpUseReversalOppositeOnBaitPips = true; // Bật: (1) mồi đủ pip bất lợi → 1 lệnh quay đầu ngược basket (2) theo dõi lệnh đó, đủ pip bất lợi → thêm 1 lệnh ngược basket
+input double InpReversalOppositeTriggerPips = 50.0; // 0=tắt. Dùng cho cả: pip bất lợi so mồi (mở lệnh quay đầu) và pip bất lợi so lệnh quay đầu (mở thêm 1 lệnh)
+input double InpReversalOppositeLotPctOfBait = 300.0; // % lot so với lot mồi (300 = 3×) cho mỗi lệnh ngược basket (quay đầu + bổ sung)
 input int InpBasketLogIntervalSec = 5;           // Mỗi N giây in trạng thái basket (0 = mỗi lần quét)
 
 input group "=== bỏ qua ===" input double InpTrailDropFromPeakPct = 0; // Chốt trail: P+L≥0 và P+L < đỉnh×(1−%/100). Độc lập với InpReversalClosePctOfTp. 0=tắt trail. Dễ nhầm với quay đầu — xem dòng dưới
@@ -47,6 +50,9 @@ CTrade g_trade;
 datetime g_lastHybridScanTime = 0;
 double g_peakBasketProfit = 0.0;
 bool g_hedgePlaced = false;
+bool g_reversalOppositePlaced = false;       // đã mở lệnh quay đầu (ngược basket) theo pip mồi
+bool g_reversalOppositeFollowUpPlaced = false; // đã mở thêm 1 lệnh ngược basket sau khi lệnh quay đầu đi bất lợi đủ pip
+double g_reversalFirstLegOpenPrice = 0.0;    // giá mở lệnh quay đầu — mốc pip bước (2)
 datetime g_lastBasketStatusLog = 0;
 double g_baitLotVolume = 0.0;        // lot lệnh mồi vừa mở (cho tỉ lệ hedge)
 double g_baitOpenPrice = 0.0;        // giá vào mồi — mốc nhồi theo n×pip
@@ -175,7 +181,9 @@ void UiPanelUpdate() {
             t += L("Quay đầu ≤ ", "Reversal ≤ ") + DoubleToString(rfl, 1) + "\n";
         }
         t += L("Mồi @ ", "Bait @ ") + DoubleToString(g_baitOpenPrice, (int)SymbolInfoInteger(_Symbol, SYMBOL_DIGITS));
-        t += "  hedge " + (g_hedgePlaced ? "OK" : "--") + "\n";
+        t += "  hedge " + (g_hedgePlaced ? "OK" : "--");
+        t += L("  quay đầu ", "  rev ") + (g_reversalOppositePlaced ? "1" : "-");
+        t += "/" + (g_reversalOppositeFollowUpPlaced ? "2" : "-") + "\n";
         t += L("Vị thế EA: ", "EA pos: ") + IntegerToString(nAll) + "\n";
     }
 
@@ -207,6 +215,11 @@ double VolumeFromLotPercentOfOneLot(const double lotPct) {
 double HedgeVolumeFromBaitLot() {
     const double baitRef = (g_baitLotVolume > 0.0) ? g_baitLotVolume : VolumeFromLotPercentOfOneLot(InpBaitLotPct);
     return NormalizeVolumeLocal(baitRef * (InpHedgeLotPctOfBait / 100.0));
+}
+
+double ReversalOppositeVolumeFromBaitLot() {
+    const double baitRef = (g_baitLotVolume > 0.0) ? g_baitLotVolume : VolumeFromLotPercentOfOneLot(InpBaitLotPct);
+    return NormalizeVolumeLocal(baitRef * (InpReversalOppositeLotPctOfBait / 100.0));
 }
 
 // Giá trị vị thế lệnh mồi (notional): |lot × SYMBOL_TRADE_CONTRACT_SIZE × giá mở|. Fallback: OrderCalcMargin nếu không tính được.
@@ -324,6 +337,12 @@ void ResetBasketMoneyRules() {
     g_basketTpMoney = 0.0;
     g_basketLossMoney = 0.0;
     g_basketBaitValueMoney = 0.0;
+}
+
+void ResetReversalOppositeState() {
+    g_reversalOppositePlaced = false;
+    g_reversalOppositeFollowUpPlaced = false;
+    g_reversalFirstLegOpenPrice = 0.0;
 }
 
 void RecoverBasketGlobalsIfNeeded() {
@@ -625,6 +644,7 @@ void TryOpenBaitFromSignal() {
                   (fd > 0) ? "LONG" : "SHORT", " vol=", vol);
         g_peakBasketProfit = 0.0;
         g_hedgePlaced = false;
+        ResetReversalOppositeState();
         g_baitLotVolume = vol;
         g_baitOpenPrice = g_trade.ResultPrice();
         g_basketBuy = (fd > 0);
@@ -673,6 +693,7 @@ void ManageBasket() {
         CloseAllOurPositionsAndPendings();
         g_peakBasketProfit = 0.0;
         g_hedgePlaced = false;
+        ResetReversalOppositeState();
         return;
     }
 
@@ -690,6 +711,7 @@ void ManageBasket() {
         CloseAllOurPositionsAndPendings();
         g_peakBasketProfit = 0.0;
         g_hedgePlaced = false;
+        ResetReversalOppositeState();
         return;
     }
 
@@ -712,6 +734,7 @@ void ManageBasket() {
             CloseAllOurPositionsAndPendings();
             g_peakBasketProfit = 0.0;
             g_hedgePlaced = false;
+            ResetReversalOppositeState();
             return;
         }
     }
@@ -732,6 +755,7 @@ void ManageBasket() {
             CloseAllOurPositionsAndPendings();
             g_peakBasketProfit = 0.0;
             g_hedgePlaced = false;
+            ResetReversalOppositeState();
             return;
         }
     }
@@ -750,6 +774,65 @@ void ManageBasket() {
     if (InpBasketLogIntervalSec <= 0 || TimeCurrent() - g_lastBasketStatusLog >= InpBasketLogIntervalSec) {
         g_lastBasketStatusLog = TimeCurrent();
         LogBasketSnapshot(n, pnl, eq, tpAbs, lossCap, profitLast, lastType, maxTotal);
+    }
+
+    // (1) Pip bất lợi so mồi → 1 lệnh quay đầu (ngược basket). (2) Theo dõi giá mở lệnh đó; pip bất lợi so lệnh đó → thêm 1 lệnh ngược basket.
+    if (InpUseReversalOppositeOnBaitPips && InpReversalOppositeTriggerPips > 0.0 && InpReversalOppositeLotPctOfBait > 0.0) {
+        const double pipRv = PipSizeLocal();
+        const double bidRv = SymbolInfoDouble(_Symbol, SYMBOL_BID);
+        const double askRv = SymbolInfoDouble(_Symbol, SYMBOL_ASK);
+        const double dRv = InpReversalOppositeTriggerPips * pipRv;
+        const ENUM_ORDER_TYPE oppBasket = g_basketBuy ? ORDER_TYPE_SELL : ORDER_TYPE_BUY;
+        const double volRv = ReversalOppositeVolumeFromBaitLot();
+        const double vminRv = SymbolInfoDouble(_Symbol, SYMBOL_VOLUME_MIN);
+
+        if (!g_reversalOppositePlaced && g_baitOpenPrice > 0.0) {
+            bool adverseFromBait = false;
+            if (g_basketBuy)
+                adverseFromBait = (bidRv <= g_baitOpenPrice - dRv);
+            else
+                adverseFromBait = (askRv >= g_baitOpenPrice + dRv);
+            if (adverseFromBait && volRv >= vminRv) {
+                if (OpenMarket(oppBasket, volRv, "HYBRID_REV_OPP")) {
+                    g_reversalOppositePlaced = true;
+                    g_reversalFirstLegOpenPrice = g_trade.ResultPrice();
+                    if (g_reversalFirstLegOpenPrice <= 0.0) {
+                        ulong t2;
+                        double o2;
+                        datetime tm2;
+                        long ty2;
+                        if (LatestOurPosition(t2, o2, tm2, ty2)) {
+                            const bool revLeg = (g_basketBuy && ty2 == POSITION_TYPE_SELL) || (!g_basketBuy && ty2 == POSITION_TYPE_BUY);
+                            if (revLeg)
+                                g_reversalFirstLegOpenPrice = o2;
+                        }
+                    }
+                    Print(L("Lệnh quay đầu (pip so mồi): ngược ≥ ", "First reversal (vs bait): adverse ≥ "),
+                          DoubleToString(InpReversalOppositeTriggerPips, 1),
+                          L(" pip | lot ", " pip | lot "),
+                          DoubleToString(InpReversalOppositeLotPctOfBait, 1), L("% lot mồi.", "% of bait lot."));
+                }
+            } else if (adverseFromBait && volRv < vminRv && !InpQuietExpertsLog) {
+                Print(L("HYBRID_REV_OPP: lot sau chuẩn hóa < SYMBOL_VOLUME_MIN — không mở.", "HYBRID_REV_OPP: normalized lot < min — skip."));
+            }
+        } else if (g_reversalOppositePlaced && !g_reversalOppositeFollowUpPlaced && g_reversalFirstLegOpenPrice > 0.0) {
+            bool adverseFromFirstRev = false;
+            if (g_basketBuy)
+                adverseFromFirstRev = (askRv >= g_reversalFirstLegOpenPrice + dRv); // lệnh quay đầu = SELL
+            else
+                adverseFromFirstRev = (bidRv <= g_reversalFirstLegOpenPrice - dRv); // lệnh quay đầu = BUY
+            if (adverseFromFirstRev && volRv >= vminRv) {
+                if (OpenMarket(oppBasket, volRv, "HYBRID_REV_OPP2")) {
+                    g_reversalOppositeFollowUpPlaced = true;
+                    Print(L("Lệnh quay đầu bị ngược thêm ≥ ", "First reversal adverse ≥ "),
+                          DoubleToString(InpReversalOppositeTriggerPips, 1),
+                          L(" pip → thêm 1 lệnh ngược basket (lot ", " pip → extra opposite basket leg (lot "),
+                          DoubleToString(InpReversalOppositeLotPctOfBait, 1), L("% mồi).", "% bait)."));
+                }
+            } else if (adverseFromFirstRev && volRv < vminRv && !InpQuietExpertsLog) {
+                Print(L("HYBRID_REV_OPP2: lot < min — không mở.", "HYBRID_REV_OPP2: lot < min — skip."));
+            }
+        }
     }
 
     if (lastTicket == 0 || lastType < 0)
@@ -847,6 +930,7 @@ void ProcessScan() {
 
     g_peakBasketProfit = 0.0;
     g_hedgePlaced = false;
+    ResetReversalOppositeState();
     g_baitLotVolume = 0.0;
     g_baitOpenPrice = 0.0;
     g_basketBuy = true;
@@ -875,6 +959,10 @@ int OnInit() {
         Print(L("InpHedgeLotPctOfBait phải > 0.", "InpHedgeLotPctOfBait must be > 0."));
         return INIT_PARAMETERS_INCORRECT;
     }
+    if (InpUseReversalOppositeOnBaitPips && InpReversalOppositeTriggerPips > 0.0 && InpReversalOppositeLotPctOfBait <= 0.0) {
+        Print(L("InpReversalOppositeLotPctOfBait phải > 0 khi bật pip ngược mồi.", "InpReversalOppositeLotPctOfBait must be > 0 when bait adverse pip add is on."));
+        return INIT_PARAMETERS_INCORRECT;
+    }
 
     if (InpTakeProfitBaitPct <= 0.0) {
         Print(L("InpTakeProfitBaitPct phải > 0.", "InpTakeProfitBaitPct must be > 0."));
@@ -898,6 +986,7 @@ int OnInit() {
     g_lastHybridScanTime = 0;
     g_peakBasketProfit = 0.0;
     g_hedgePlaced = false;
+    ResetReversalOppositeState();
     g_baitLotVolume = 0.0;
     g_baitOpenPrice = 0.0;
     g_basketBuy = true;

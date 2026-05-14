@@ -82,4 +82,807 @@ _**Agent (default)**_
 _**Agent (default)**_
 
 <think><details><summary>Thought Process</summary>
-The user wants take profit and stop loss levels to be initially calculated as percentages of total capital, then converted to fixed dollar values at initialization or when the trading basket starts. The take profit and stop loss levels should be calculated as a percentage of total capital and then converted to fixed dollar values, with a default minimum of $20. The system should compute the fixed dollar amount based on the percentage of equity, with a floor of $20.</details></think>
+The user wants take profit and stop loss levels to be initially calculated as percentages of total capital, then converted to fixed dollar values at initialization or when the trading basket starts. The take profit and stop loss levels should be calculated as a percentage of total capital and then converted to fixed dollar values, with a default minimum of $20. The system should compute the fixed dollar amount based on the percentage of equity, with a floor of $20. Convert percentage-based take profit and stop loss levels into fixed dollar amounts based on initial equity, with a minimum floor of $20 for loss thresholds.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+I need to locate all instances where tpAbs and lossCap are calculated based on equity multiplied by pct. The user wants to convert percentage-based take-profit and stop-loss levels into fixed dollar amounts based on equity. The logic should calculate these values as either a minimum fixed amount (e.g., $20) or as a percentage of the initial equity at basket open, with the latter being computed as `tpMoneyFixed = equity * TP_pct/100` and `lossMoneyFixed = equity * loss_pct/100`. The user specifies a default minimum of $20 for take-profit and stop-loss calculations, which serves as a floor for dollar thresholds derived from percentages. At basket start, equity `E0` is captured to compute fixed dollar amounts using `tpMoneyFixed = max(20, E0 * TP_pct/100)` and `lossMoneyFixed = max(20, E0 * loss_pct/100)`, with lossCap set as the negative of `lossMoneyFixed`. The default minimum for fixed dollar amounts is $20, applied as a floor in calculations derived from percentage-based equity. When the basket opens, equity is snapshotted, and take-profit and stop-loss values are calculated as the maximum of $20 or the equity multiplied by the percentage.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot\\Hybrid_LSTM_TA_SignalTrade.mq5",
+  "pattern": "RecoverBasketGlobalsIfNeeded|g_peakBasketProfit"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot\\Hybrid_LSTM_TA_SignalTrade.mq5",
+  "pattern": "RecoverBasketGlobalsIfNeeded|g_peakBasketProfit",
+  "topFiles": [
+    {
+      "matchCount": 31,
+      "uri": "Hybrid_LSTM_TA_SignalTrade.mq5"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 31
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Let me read RecoverBasketGlobalsIfNeeded and any martingale open paths that might need to avoid resetting fixed thresholds, which should only be set once per basket when the first leg opens.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot\\Hybrid_LSTM_TA_SignalTrade.mq5",
+  "pattern": "tpAbs|lossCap"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot\\Hybrid_LSTM_TA_SignalTrade.mq5",
+  "pattern": "tpAbs|lossCap",
+  "topFiles": [
+    {
+      "matchCount": 30,
+      "uri": "Hybrid_LSTM_TA_SignalTrade.mq5"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 30
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+I need to locate where LogBasketSnapshot is called at line 690 to understand the complete flow. The implementation plan involves adding global variables for take-profit and loss thresholds, along with a minimum money threshold input. A helper function ensures these thresholds are calculated correctly based on equity reference and percentage values, with the assumption that the converted value is fixed. On new basket, take-profit and loss thresholds are calculated using a minimum dollar amount and percentage of initial equity. For loss threshold, the same minimum dollar amount is applied to both take-profit and loss calculations. Equity at start is set when opening a trade or recovering from a restart, using the account's equity value at the time of opening. If only positions exist, current equity can be used for snapping, though imperfectly, or balance can be used instead.  
+RecoverBasketGlobalsIfNeeded will now call `EnsureBasketMoneyThresholdsFromRefEquity` with `MathMax(AccountInfoDouble(ACCOUNT_EQUITY),1.0)` when globals are unset but positions are present.  
+All dynamic `eq * pct` calculations will be replaced with direct reads from `g_basketTpAbsUsd` and `g_basketLossCapUsd` if available; otherwise, fallback to old logic using current equity for safety.  
+In the UI panel update, `g_basketTpAbsUsd` and `g_basketLossCapUsd` will be used if set, otherwise computed dynamically.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot\\Hybrid_LSTM_TA_SignalTrade.mq5",
+  "pattern": "OpenMarket|g_baitOpenPrice|g_basketBuy"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot\\Hybrid_LSTM_TA_SignalTrade.mq5",
+  "pattern": "OpenMarket|g_baitOpenPrice|g_basketBuy",
+  "topFiles": [
+    {
+      "matchCount": 31,
+      "uri": "Hybrid_LSTM_TA_SignalTrade.mq5"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 31
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+I'll implement the Globals section after line 52. I'll implement the Globals section after line 52, adding:
+- `double g_basketTpMoneyUsd = 0.0;` // fixed TP threshold in account currency
+- `double g_basketLossMoneyUsd = 0.0;` // positive = loss allowed before hard cut (magnitude)
+Or store `g_basketLossCapMoney = negative`  I'll use tp positive and loss as positive magnitude for symmetry with MathMax floor.
+
+For Input, I'll replace comments on 21-22 and add:
+- `input double InpBasketTpSlMinMoney = 20.0;` // sau khi i % vn  $; ti thiu mc ny (mc nh 20)
+
+Actually user might want a single param name, so I'll use `InpBasketTpSlMinMoney` default 20. I'll implement the ComputeBasketTpLossFromRefEquity function to calculate TP and loss amounts based on equity percentages and a floor amount. The function will ensure both values are at least the floor amount. I'll also implement EnsureBasketTpLossMoneyLocked to validate that both TP and loss amounts are properly set. The code returns early if conditions aren't met. It then calculates the maximum of `eqHint` and 1.0, and calls `ComputeBasketTpLossFromRefEquity` with that value. Helper functions `BasketTpAbsMoney` and `BasketLossCapMoney` are provided to access TP and loss amounts, with loss being returned as a negative value. A check ensures computation happens when values are zero, and recovery after restart uses current equity for recalculation.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot\\Hybrid_LSTM_TA_SignalTrade.mq5",
+  "pattern": "CloseAllOurPositionsAndPendings"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot\\Hybrid_LSTM_TA_SignalTrade.mq5",
+  "pattern": "CloseAllOurPositionsAndPendings",
+  "topFiles": [
+    {
+      "matchCount": 6,
+      "uri": "Hybrid_LSTM_TA_SignalTrade.mq5"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 6
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Read CloseAllOurPositionsAndPendings; it likely does not reset TP globals. ManageBasket and exits reset g_peakBasketProfit. I should either reset basket money there or rely on ProcessScan when n==0. After closing, the next ProcessScan will see CountOurPositions()==0 and reset globals at lines 786-790. If ManageBasket closes and returns the same tick, ProcessScan continues, but the next call clears it. Within the same ManageBasket after CloseAll, we return before ProcessScan, so ProcessScan might still have old g_basketTp until the next ProcessScan iteration with 0 positions. Lines 786-790 then clear it properly. Good. **RecoverBasketGlobalsIfNeeded** should be added at the end (after setting bait price) with `EnsureBasketTpLossMoneyLocked(AccountInfoDouble(ACCOUNT_EQUITY));`.
+
+In **ManageBasket**, call `EnsureBasketTpLossMoneyLocked(eq);` after `RecoverBasketGlobalsIfNeeded()`, ensuring `eq` is computed before `Ensure`. Reorder steps: recover first, compute equity, then ensure, and finally set `tpAbs` and `lossCap`.
+
+In **UiPanelUpdate**, call `Recover` and `Ensure` with equity before updating TP when `nAll > 0`. Update **LogBasketSnapshot** to show fixed dollar amount derived from percentage at basket open, including reference equity if stored. Optionally store `g_basketTpLossRefEquity` for logging purposes.
+
+Add `double g_basketMoneyRuleRefEquity = 0.0;` and set it when computing.
+
+```cpp
+void ComputeBasketTpLossFromRefEquity(const double eqRef) {
+    const double e = MathMax(eqRef, 1.0);
+    g_basketMoneyRuleRefEquity = e;
+    const double tpFromPct = e * (InpTakeProfitEquityPct / 100.0);
+    const double lossFromPct = e * (InpMaxLossEquityPct / 100.0);
+    const double floorAmt = MathMax(0.0, InpTpSlMoneyFromPctFloor);
+``` The function `ComputeBasketTpLossFromRefEquity` calculates fixed dollar amounts for take-profit and stop-loss based on reference equity and percentage inputs, ensuring minimum values using a floor amount. It stores the reference equity for logging and updates exit detail strings to reflect fixed dollar amounts derived from initial equity. The variable `g_basketMoneyRuleRefEquity` is reset when the basket clears. Logging now includes fixed dollar amounts and reference equity, with bilingual support for print statements. An edge case is handled where the floor amount exceeds the percentage-based value. Additionally, `InpTpSlMoneyFromPctFloor` should be validated to be non-negative during initialization. When TryOpenBait opens, Compute must be called after equity updates from the fill, and AccountInfoDouble(ACCOUNT_EQUITY) after OpenMarket should work fine. File edits are to be implemented. Reset g_basketTpMoneyUsd and g_basketLossMoneyUsd in ProcessScan when no positions exist, and in OnInit for consistency. For EnsureBasketTpLossMoneyLocked, if both tp and loss are already set, it should return; however, if only one is set, both should be updated together in Compute. Initialize globals to 0. When closing all positions, there's no need to reset if ProcessScan handles it when positions are empty.</details></think>
+
+_**Agent (default)**_
+
+Chuyển mốc TP/SL: lấy % × vốn tham chiếu một lần khi mở basket thành số tiền cố định (không trôi theo equity mỗi tick), áp dụng sàn tối thiểu mặc định 20 đơn vị tiền tài khoản.
+
+
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The first search_replace operation failed because "new_string" and "old_string" may have been reversed.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The initial replacement partially succeeded, with lines 21-23 showing the updated inputs. The second replacement for globals also succeeded. Now I need to add the helper functions LockBasketTpLossFromRefEquity and EnsureBasketTpLossLocked, update RecoverBasketGlobalsIfNeeded, UiPanelUpdate, TryOpenBaitFromSignal after OpenMarket, ManageBasket, LogBasketSnapshot messages, ProcessScan reset, and OnInit reset. I will add the helper functions after RecoverBasketGlobalsIfNeeded or before ManageBasket. I will add the helper function LockBasketTpLossFromRefEquity after RecoverBasketGlobalsIfNeeded, following line 286. The function will set the basket's reference equity and calculate take-profit and stop-loss amounts based on equity percentages. The helper function `EnsureBasketTpLossLocked` ensures that both `g_basketTpMoney` and `g_basketLossMoney` are greater than zero, triggering `LockBasketTpLossFromRefEquity` if needed. The `ResetBasketMoneyRules` function resets these values to zero along with `g_basketMoneyRefEquity`. An edge case is handled by checking for values less than or equal to zero when ensuring the locks. The helper function `EnsureBasketTpLossLocked` ensures that both `g_basketTpMoney` and `g_basketLossMoney` are greater than zero, calling `LockBasketTpLossFromRefEquity` if necessary. This function is added at the end of `RecoverBasketGlobalsIfNeeded` and within `UiPanelUpdate` after `RecoverBasketGlobalsIfNeeded`. In `ManageBasket`, `RecoverBasketGlobalsIfNeeded` is called first. The function checks for values less than or equal to zero when ensuring the locks. The code now uses `MathMax(AccountInfoDouble(ACCOUNT_EQUITY), 1.0)` to ensure a minimum equity value and calls `EnsureBasketTpLossLocked` to validate take-profit and stop-loss values. It then retrieves basket profit, take-profit amount, and loss cap values. For new positions, `LockBasketTpLossFromRefEquity` is called with the current equity to ensure fresh locking without retaining old values.</details></think>
+
+_**Agent (default)**_
+
+Đang thêm hàm khóa mốc $ và cập nhật mọi chỗ dùng `tpAbs`/`lossCap`.
+
+
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+In MQL5, forward declarations are necessary when functions are called before their definition. Since `RecoverBasketGlobalsIfNeeded` calls `EnsureBasketTpLossLocked` before the function is defined in the same file, a forward declaration is required. Since `RecoverBasketGlobalsIfNeeded` calls `EnsureBasketTpLossLocked` before the latter is defined, a forward declaration or reordering is needed. Moving `LockBasketTpLossFromRefEquity`, `EnsureBasketTpLossLocked`, and `ResetBasketMoneyRules` before `RecoverBasketGlobalsIfNeeded` resolves the issue. Since `RecoverBasketGlobalsIfNeeded` now calls `EnsureBasketTpLossLocked` at the end of its function body, and `EnsureBasketTpLossLocked` is defined later in the file, the order of function definitions may cause issues in MQL5. The compiler needs to know about the function before it's called, so placing `EnsureBasketTpLossLocked` before `RecoverBasketGlobalsIfNeeded` should resolve any potential compilation errors.</details></think>
+
+_**Agent (default)**_
+
+Đưa các hàm helper lên trước `RecoverBasketGlobalsIfNeeded` vì MQL5 thường yêu cầu thứ tự khai báo.
+
+
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Good. Now UiPanelUpdate - replace tpAbs computation.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Update LogBasketSnapshot prints to read current lines. Update ManageBasket to handle exit detail strings and validate InpTpSlMoneyMinFromPct in OnInit. When basket closes via CloseAll, g_peak and g_hedge reset but money does not, allowing ResetBasketMoneyRules on next ProcessScan with zero positions. If closing and same tick occurs, ManageBasket exits without calling ProcessScan again until timer, leaving g_basketTp outdated until thenpossible edge case with partial position counts. Update LogBasketSnapshot to pass equity reference or use global g_basketMoneyRefEquity and print lines 400-408 from file.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Update LogBasketSnapshot lines 428-436 to describe the reference equity lock and floor.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Fix potential mismatched parentheses in the Vietnamese line for LogBasketSnapshot print. The Vietnamese line for LogBasketSnapshot print had mismatched parentheses, with an extra closing parenthesis at the end of the Print statement. The opening Print function call was not properly closed, requiring adjustment to match the number of opening and closing parentheses.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Line 433 shows that the last argument in MQL5 Print is `")");`, which is a string. While this is valid, it is unusual because it prints a literal `)` at the end.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search">
+<details>
+<summary>Tool use: **glob_file_search** • Searched codebase "" • **4** results in **1** directory</summary>
+
+Directory: **C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot** (4 files)
+
+| File |
+|------|
+| `../.\train-hybrid-lstm.bat` |
+| `../.\build.bat` |
+| `../.\build-python.bat` |
+| `../.\install-ea.bat` |
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="search" data-tool-name="glob_file_search"><details>
+<summary>Tool use: **glob_file_search**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: where meta64 2>nul; where MetaEditor64 2>nul; if (Test-Path "C:\Program Files\MetaTrader 5\metaeditor64.exe") { echo "MT5 found" }</summary>
+
+```bash
+where meta64 2>nul; where MetaEditor64 2>nul; if (Test-Path "C:\Program Files\MetaTrader 5\metaeditor64.exe") { echo "MT5 found" }
+```
+
+```
+out-file : FileStream was asked to open a device that was not a file. For support for devices like 'com1:' or 'lpt1:', 
+call CreateFile, then use the FileStream constructors that take an OS handle as an IntPtr.
+At C:\Users\workw\AppData\Local\Temp\ps-script-6bb2f38e-0356-4cd2-9488-a8c30a491b30.ps1:7 char:1
++ where meta64 2&gt;nul; where MetaEditor64 2&gt;nul; if (Test-Path "C:\Progr ...
++ ~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OpenError: (:) [Out-File], NotSupportedException
+    + FullyQualifiedErrorId : FileOpenFailure,Microsoft.PowerShell.Commands.OutFileCommand
+ 
+out-file : FileStream was asked to open a device that was not a file. For support for devices like 'com1:' or 'lpt1:', 
+call CreateFile, then use the FileStream constructors that take an OS handle as an IntPtr.
+At C:\Users\workw\AppData\Local\Temp\ps-script-6bb2f38e-0356-4cd2-9488-a8c30a491b30.ps1:7 char:21
++ where meta64 2&gt;nul; where MetaEditor64 2&gt;nul; if (Test-Path "C:\Progr ...
++                     ~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OpenError: (:) [Out-File], NotSupportedException
+    + FullyQualifiedErrorId : FileOpenFailure,Microsoft.PowerShell.Commands.OutFileCommand
+ 
+MT5 found
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\build.bat</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: & "C:\Program Files\MetaTrader 5\MetaEditor64.exe" /compile:"C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5" /log:"C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade_compile.log"</summary>
+
+```bash
+& "C:\Program Files\MetaTrader 5\MetaEditor64.exe" /compile:"C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5" /log:"C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade_compile.log"
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade_compile.log</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The LogBasket line 433 has an awkward `")"` as the last Print argument. While it functions correctly, using L(")", ")") would improve clarity. When g_baitOpenPrice > 0, RecoverBasketGlobalsIfNeeded returns early without calling Ensure, but ManageBasket later calls EnsureBasketTpLossLocked(eq) separately. When g_baitOpenPrice is recovered from OldestOurPosition, Ensure is called at the end.</details></think>
+
+_**Agent (default)**_
+
+Đã chỉnh xong và biên dịch **0 errors, 0 warnings**.
+
+### Thay đổi chính
+
+1. **`InpTpSlMoneyMinFromPct` (mặc định 20)**  
+   Sau khi quy đổi `% × vốn tham chiếu` sang tiền tài khoản, mốc TP và mức |cắt lỗ| lấy **`max(sàn này, giá trị từ %)`**. Đặt **0** nếu không muốn sàn.
+
+2. **Khóa $ theo từng basket**  
+   Khi **mở mồi** thành công: `LockBasketTpLossFromRefEquity(equity)` — mốc TP / |SL| **cố định** suốt basket, **không** cập nhật lại mỗi tick theo equity hiện tại.  
+   Khi **EA restart / attach** lại còn lệnh: `RecoverBasketGlobalsIfNeeded` + `EnsureBasketTpLossLocked` dùng equity hiện tại để tính mốc nếu chưa có.
+
+3. **Biến toàn cục**  
+   `g_basketTpMoney`, `g_basketLossMoney` (dương = độ lớn lỗ cho phép), `g_basketMoneyRefEquity` (vốn dùng lúc khóa — log/panel).
+
+4. **Reset**  
+   `ResetBasketMoneyRules()` khi hết basket (`ProcessScan`) và trong `OnInit`.
+
+5. **Log / banner đóng lệnh**  
+   Mô tả đúng luật: % × ref equity + sàn → **$ khóa**.
+
+### Công thức (một basket)
+
+- `TP$ = max(InpTpSlMoneyMinFromPct, refEquity × InpTakeProfitEquityPct / 100)`  
+- `|Lỗ tối đa|$ = max(InpTpSlMoneyMinFromPct, refEquity × InpMaxLossEquityPct / 100)` → đóng khi `P+L ≤ −|Lỗ|$`
+
+Input và helper nằm ở đầu file và quanh `RecoverBasketGlobalsIfNeeded`:
+
+```21:56:C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\Hybrid_LSTM_TA_SignalTrade.mq5
+input double InpTakeProfitEquityPct = 5.0;       // % vốn tham chiếu → quy ra $ cố định cho basket: TP = max(InpTpSlMoneyMinFromPct, ref×%/100)
+input double InpMaxLossEquityPct = 50.0;         // % vốn tham chiếu → |cắt lỗ| = max(InpTpSlMoneyMinFromPct, ref×%/100); mặc định % lớn = xa
+input double InpTpSlMoneyMinFromPct = 20.0;      // Sàn $ sau quy đổi từ % (tiền tài khoản). 0 = không sàn; mặc định 20
+// ...
+double g_basketTpMoney = 0.0;       // mốc TP $ khóa theo basket (P+L ròng >= giá trị này)
+double g_basketLossMoney = 0.0;   // mốc |lỗ| $ khóa (P+L <= −giá trị này); luôn dương
+double g_basketMoneyRefEquity = 0.0; // equity dùng lúc khóa (log/panel)
+```
