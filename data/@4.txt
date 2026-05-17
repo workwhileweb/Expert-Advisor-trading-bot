@@ -1,0 +1,2 @@
+@1.png @2.png @3.txt @4.png đây là thông tin giao dịch và cấu hình của 1 con bot tên là hedgeDCA , dựa vào các thông tin trên (nhất là các hình ảnh cấu hình và giao dịch và log text), hãy phân tích ra chi tiết thuật toán giao dịch của nó, lưu thành file .md, đồng thời code 1 file .mq5 theo thuật toán đã phân tích
+
