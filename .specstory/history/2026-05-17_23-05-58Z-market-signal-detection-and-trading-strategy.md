@@ -469,6 +469,1073 @@ _**Agent (default)**_
 
 <details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
 
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: $me = "C:\Program Files\MetaTrader 5\MetaEditor64.exe"; $src = "C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5"; $log = "C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade_compile.log"; if (Test-Path $me) { & $me /compile:$src /log:$log; Start-Sleep -Seconds 4; if (Test-Path $log) { Get-Content $log } } else { "MetaEditor not found" }</summary>
+
+```bash
+$me = "C:\Program Files\MetaTrader 5\MetaEditor64.exe"; $src = "C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5"; $log = "C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade_compile.log"; if (Test-Path $me) { & $me /compile:$src /log:$log; Start-Sleep -Seconds 4; if (Test-Path $log) { Get-Content $log } } else { "MetaEditor not found" }
+```
+
+```
+
+
+C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5 : information: compiling C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5
+C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5 : information: including C:\Users\workw\AppData\Roaming\MetaQuotes\Terminal\D0E8209F77C8CF37AD8BF550E51FF075\MQL5\Include\Trade\Trade.mqh
+C:\Users\workw\AppData\Roaming\MetaQuotes\Terminal\D0E8209F77C8CF37AD8BF550E51FF075\MQL5\Include\Trade\Trade.mqh : information: including C:\Users\workw\AppData\Roaming\MetaQuotes\Terminal\D0E8209F77C8CF37AD8BF550E51FF075\MQL5\Include\Object.mqh
+C:\Users\workw\AppData\Roaming\MetaQuotes\Terminal\D0E8209F77C8CF37AD8BF550E51FF075\MQL5\Include\Object.mqh : information: including C:\Users\workw\AppData\Roaming\MetaQuotes\Terminal\D0E8209F77C8CF37AD8BF550E51FF075\MQL5\Include\StdLibErr.mqh
+C:\Users\workw\AppData\Roaming\MetaQuotes\Terminal\D0E8209F77C8CF37AD8BF550E51FF075\MQL5\Include\Trade\Trade.mqh : information: including C:\Users\workw\AppData\Roaming\MetaQuotes\Terminal\D0E8209F77C8CF37AD8BF550E51FF075\MQL5\Include\Trade\OrderInfo.mqh
+C:\Users\workw\AppData\Roaming\MetaQuotes\Terminal\D0E8209F77C8CF37AD8BF550E51FF075\MQL5\Include\Trade\Trade.mqh : information: including C:\Users\workw\AppData\Roaming\MetaQuotes\Terminal\D0E8209F77C8CF37AD8BF550E51FF075\MQL5\Include\Trade\HistoryOrderInfo.mqh
+C:\Users\workw\AppData\Roaming\MetaQuotes\Terminal\D0E8209F77C8CF37AD8BF550E51FF075\MQL5\Include\Trade\Trade.mqh : information: including C:\Users\workw\AppData\Roaming\MetaQuotes\Terminal\D0E8209F77C8CF37AD8BF550E51FF075\MQL5\Include\Trade\PositionInfo.mqh
+C:\Users\workw\AppData\Roaming\MetaQuotes\Terminal\D0E8209F77C8CF37AD8BF550E51FF075\MQL5\Include\Trade\Trade.mqh : information: including C:\Users\workw\AppData\Roaming\MetaQuotes\Terminal\D0E8209F77C8CF37AD8BF550E51FF075\MQL5\Include\Trade\DealInfo.mqh
+C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5 : information: including C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_Signal.mqh
+C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5(52,10) : error 125: variable already defined
+C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_Signal.mqh : information: info    see declaration of variable 'g_lastBarTime'
+C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_Signal.mqh(52,10) : error 282: idenfitier 'g_lastBarTime' already used
+C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_Signal.mqh : information: info    see declaration of variable 'g_lastBarTime'
+Result: 2 errors, 0 warnings
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot\\mq5",
+  "pattern": "g_lastBarTime"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot\\mq5",
+  "pattern": "g_lastBarTime",
+  "topFiles": [
+    {
+      "matchCount": 3,
+      "uri": "mq5\\Hybrid_LSTM_TA_SidewayMartTrade_compile.log"
+    },
+    {
+      "matchCount": 4,
+      "uri": "mq5\\Hybrid_LSTM_TA_SidewayMartTrade.mq5"
+    },
+    {
+      "matchCount": 3,
+      "uri": "mq5\\Hybrid_LSTM_TA_SignalTrade.mq5"
+    },
+    {
+      "matchCount": 1,
+      "uri": "mq5\\Hybrid_LSTM_TA_Signal.mqh"
+    },
+    {
+      "matchCount": 1,
+      "uri": "mq5\\Hybrid_LSTM_TA_SignalBarStack.mq5"
+    },
+    {
+      "matchCount": 3,
+      "uri": "mq5\\Hybrid_LSTM_TA.mq5"
+    }
+  ],
+  "totalFiles": 6,
+  "totalMatches": 15
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+SignalTrade relies on g_lastBarTime from mqh without redefining it.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: $me = "C:\Program Files\MetaTrader 5\MetaEditor64.exe"; $src = "C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5"; $log = "C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade_compile.log"; & $me /compile:$src /log:$log; Start-Sleep -Seconds 4; Select-String -Path $log -Pattern "error|warning|Result"</summary>
+
+```bash
+$me = "C:\Program Files\MetaTrader 5\MetaEditor64.exe"; $src = "C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5"; $log = "C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade_compile.log"; & $me /compile:$src /log:$log; Start-Sleep -Seconds 4; Select-String -Path $log -Pattern "error|warning|Result"
+```
+
+```
+
+mq5\Hybrid_LSTM_TA_SidewayMartTrade_compile.log:47:Result: 0 errors, 0 warnings, 2192 ms elapsed, cpu='X64 Regular'
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+Đã tạo EA mới **`mq5/Hybrid_LSTM_TA_SidewayMartTrade.mq5`** — biên dịch **0 lỗi**.
+
+## Chức năng chính
+
+### 1. Tín hiệu vào lệnh
+- Dùng `Hybrid_LSTM_TA_Signal.mqh` → `HybridSignal_FetchForecast` (LONG / SHORT / NEUTRAL).
+- Chỉ mở **lệnh mồi** khi có hướng ≠ 0.
+
+### 2. Lọc sideway (theo giây)
+- Mỗi `InpSidewaySampleSec` (mặc định 1s) lấy mẫu **BID**.
+- Trong `InpSidewayWindowSec` (mặc định 60s): nếu biên độ ≤ `InpSidewayMaxRangePips` (8 pip) → **SIDEWAY** → **không mở basket mới** (`InpBlockEntryWhenSideway`).
+- Basket đang mở vẫn được quản lý bình thường.
+
+### 3. Chuỗi lot (đúng mô tả của bạn)
+| Bước | Điều kiện | Hành động |
+|------|----------|-----------|
+| Mồi | Tín hiệu + không sideway | `InpFirstLot` = **0.01** |
+| Leg cuối **lãi** | — | Chờ chốt basket (không nhồi) |
+| Mồi **lỗ** | Leg cuối lỗ | Nhồi #2 cùng chiều = lot trước × **1.1** |
+| #2 **lỗ** | Leg cuối lỗ | Nhồi #3 = lot #2 × **1.1** |
+| #3 **lỗ** | Leg cuối lỗ | **Quay đầu** ngược chiều = lot mồi × **5** |
+
+### 4. Chốt lời / cắt lỗ
+- **Basket:** `InpBasketTakeProfitPct` = **10%** giá trị lệnh mồi (`|lot×contract×giá mở|`); `InpBasketStopLossPct` = **0** → tắt.
+- **Tài khoản:** `InpAccountTakeProfitPct` / `InpAccountStopLossPct` = **0** → tắt; so với **balance lúc mở basket**.
+
+### 5. Log & panel
+- Mỗi lệnh mở / đóng có **lý do** + **LÃI/LỖ** trong Experts.
+- Panel **đa dòng** (`OBJ_EDIT`): sideway, dự báo, P+L ròng, TP/SL còn lại, leg cuối.
+
+## Input quan trọng (đã ghi chú trong code)
+
+```mq5
+InpFirstLot = 0.01
+InpMartingaleMult = 1.1
+InpReversalMult = 5.0
+InpBasketTakeProfitPct = 10.0
+InpBasketStopLossPct = 0.0        // 0 = không cắt basket
+InpAccountTakeProfitPct = 0.0     // 0 = không chốt theo TK
+InpAccountStopLossPct = 0.0
+InpSidewayWindowSec = 60
+InpSidewayMaxRangePips = 8.0
+```
+
+## Cách dùng
+1. Copy `Hybrid_LSTM_TA_SidewayMartTrade.mq5` + `Hybrid_LSTM_TA_Signal.mqh` vào `MQL5\Experts` (hoặc compile từ repo — `.ex5` vào data folder MT5).
+2. Gắn EA lên chart, bật **InpShowPanel = true** nếu muốn xem trên chart thay vì chỉ log.
+3. Tham số Hybrid (LSTM, ONNX, ngôn ngữ log…) nằm ở nhóm input từ file `.mqh`.
+
+Log compile: `mq5/Hybrid_LSTM_TA_SidewayMartTrade_compile.log`.
+
+---
+
+_**User**_
+
+ui panel chỉ hiện thị 1 line
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The user reports that a UI panel is displaying only one line instead of multiple lines as expected.</details></think>
+
+_**Agent (default)**_
+
+Đang kiểm tra cách panel được tạo và so sánh với EA khác đã hiển thị đa dòng thành công.
+
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot\\mq5",
+  "pattern": "OBJ_EDIT|OBJ_LABEL|Panel|multi"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot\\mq5",
+  "pattern": "OBJ_EDIT|OBJ_LABEL|Panel|multi",
+  "topFiles": [
+    {
+      "matchCount": 29,
+      "uri": "mq5/Hybrid_LSTM_TA_SidewayMartTrade.mq5"
+    },
+    {
+      "matchCount": 29,
+      "uri": "mq5/Hybrid_LSTM_TA_SignalTrade.mq5"
+    }
+  ],
+  "totalFiles": 2,
+  "totalMatches": 58
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The OBJ_EDIT feature in MT5 may still display as a single line in certain builds.
+
+For multi-line text in MT5, the most reliable method is to use multiple OBJ_LABEL objects stacked vertically. Other approaches include OBJ_BITMAP_LABEL with a rendered image or CCanvas/BitmapLabel. For OBJ_EDIT specifically, alignment should be set to ALIGN_LEFT, and line breaks may require \n instead of \r\n depending on the version. Disabling scroll and setting OBJPROP_READONLY may also help. Chart events might strip newlines, so careful handling is needed.
+
+OBJ_EDIT in MT5 may show as single-line in some builds despite having multiline text. Issues include incorrect line break syntax (`\r\n` vs `\n`), missing alignment properties, and font size affecting visibility. To ensure proper display, use multiple OBJ_LABEL objects stacked vertically. This method is more reliable across MT5 builds than relying on OBJ_EDIT's multiline support. Ensure proper alignment, handle text updates with `ObjectSetString` and `ChartRedraw`, and consider using `\n` for line breaks.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot\\mq5\\bot_algorithm.md",
+  "pattern": "panel|OBJ_LABEL|LABEL"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot\\mq5\\bot_algorithm.md",
+  "pattern": "panel|OBJ_LABEL|LABEL",
+  "topFiles": [],
+  "totalFiles": 0,
+  "totalMatches": 0
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot",
+  "pattern": "HSSW_PL|PanelLine|OBJ_LABEL"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot",
+  "pattern": "HSSW_PL|PanelLine|OBJ_LABEL",
+  "topFiles": [
+    {
+      "matchCount": 1,
+      "uri": "mq5/Hybrid_LSTM_TA_SignalTrade.mq5"
+    },
+    {
+      "matchCount": 11,
+      "uri": ".specstory/history/2026-05-13_03-40-25Z-new-mq5-file-for-market-signal-tracking.md"
+    }
+  ],
+  "totalFiles": 2,
+  "totalMatches": 12
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The user's build may not support multiline editing even with OBJ_EDIT.
+
+The users build may not support multiline editing even with OBJ_EDIT. A reliable solution is to use multiple OBJ_LABEL objects stacked vertically, one per line. The panel will be refactored to use multiple OBJ_LABELs instead of a single OBJ_EDIT. An array of labels will be used, with a maximum of 28 lines defined by HSSW_PANEL_MAX_LINES. A function will manage deleting all lines and setting new ones from a string. The background will be handled separately.
+
+The implementation will split text into lines using StringSplit with newline delimiter. Each line will have carriage return stripped if present. A label object will be created for each line, using a unique name with prefix and index. The labels will be positioned vertically with consistent spacing. Font and alignment properties will be set for each label.</details></think>
+
+_**Agent (default)**_
+
+`OBJ_EDIT` trên nhiều bản MT5 vẫn chỉ hiển thị một dòng. Chuyển sang nhiều `OBJ_LABEL` xếp chồng — cách ổn định nhất.
+
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+Replacing the panel section from defines through UiPanelUpdate with a multi-line OBJ_LABEL implementation.
+
+Added tracking variable `g_panelVisibleLines` to manage and delete extra lines.  
+Deleted legacy `HSSW_UI_TX` object during initialization and deinitialization.  
+Implemented functions to handle panel line names and deletions.
+
+The background object `HSSW_UI_BG` is now deleted and `g_panelVisibleLines` reset to zero during cleanup. A new function `UiPanelEnsureBackground` ensures the background rectangle label is created and updated with correct size and position. The `UiPanelSetLine` function creates label objects dynamically if they don't exist yet, and sets their properties including corner alignment and text content.
+
+The latest thinking implements the dynamic creation and configuration of label objects for each panel line. It sets properties such as font, size, color, and positioning. The labels are configured to be hidden by default and non-selectable. Text content is assigned to each label object using its unique name.
+
+The `UiPanelUpdate` function now processes text input by normalizing line endings to `\n` and splitting it into an array of lines. If the input contains no newlines but has content, it treats the whole input as a single line. The number of lines is capped at `HSSW_PANEL_MAX_LINES`. Each line is rendered with a fixed height (`lineH`) and positioned with appropriate x and y coordinates. The background rectangle is ensured to exist before rendering lines.
+
+The updated `UiPanelUpdate` function now iterates through the processed lines, trims whitespace, and sets each line's label properties. It deletes any excess lines beyond the current count and updates `g_panelVisibleLines`. The background rectangle is resized vertically to fit the content. Finally, the chart is redrawn to reflect changes. A new `UiPanelCreate` function can simply call `UiPanelUpdate` or ensure the background exists.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: $me = "C:\Program Files\MetaTrader 5\MetaEditor64.exe"; $src = "C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5"; $log = "C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade_compile.log"; & $me /compile:$src /log:$log; Start-Sleep -Seconds 4; Select-String -Path $log -Pattern "error|Result"</summary>
+
+```bash
+$me = "C:\Program Files\MetaTrader 5\MetaEditor64.exe"; $src = "C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5"; $log = "C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade_compile.log"; & $me /compile:$src /log:$log; Start-Sleep -Seconds 4; Select-String -Path $log -Pattern "error|Result"
+```
+
+```
+
+mq5\Hybrid_LSTM_TA_SidewayMartTrade_compile.log:47:Result: 0 errors, 0 warnings, 2257 ms elapsed, cpu='X64 Regular'
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+Đã sửa. Trên nhiều bản MT5, **`OBJ_EDIT` và `OBJ_LABEL` một khối** vẫn chỉ vẽ **một dòng** dù có `\n`.
+
+**Cách mới:** mỗi dòng text = một **`OBJ_LABEL` riêng** (`HSSW_PL_0`, `HSSW_PL_1`, …) xếp dọc theo `InpPanelFontSize`. Nền `OBJ_RECTANGLE_LABEL` tự giãn cao theo số dòng.
+
+**Việc cần làm:** compile lại `Hybrid_LSTM_TA_SidewayMartTrade.mq5` (F7) và gắn lại EA lên chart — object cũ `HSSW_PANEL_TX` sẽ bị xóa khi EA chạy.
+
+Bạn sẽ thấy đủ các dòng: sideway, dự báo, basket, P+L, TP/SL, v.v. Nếu `Hybrid_LSTM_TA_SignalTrade` cũng bị 1 dòng, báo để áp dụng cùng cách đó.
+
+---
+
+_**User**_
+
+tăng khoảng cách giữa các lines trong panel ui, đổi màu các line khác nhau cho dễ nhìn, đổi background black opacity 50%
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The user wants to increase the line spacing in the UI panel.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The assistant needs to add input for line spacing or increase the default line height.
+
+The assistant will implement line differentiation by color and add a black background with 50% opacity for MT5 rectangle labels using `ColorToARGB` for transparency. The background color will be set with `OBJPROP_BGCOLOR` and `OBJPROP_BACK` properties.
+
+The assistant will implement semi-transparent black background using `ColorToARGB(C'0,0,0', 128)` for MT5 objects. A function `UiPanelLineColor` will assign specific colors to lines based on their content type, including headers, symbols, market conditions, forecasts, and profit/loss indicators.
+
+The assistant will implement a function `UiPanelColorForLine` to assign colors based on line content, such as header lines, market conditions, and forecast types. Empty lines will use dim gray, headers gold, sideway markets orange, trending markets lime green, and so forth. Lines will also alternate subtly by index for better readability.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+I'll implement two changes: add InpPanelLineGap input with a default value of 12 for better spacing, and continue with the next step.
+
+I'll update the UiPanelSetLine function to accept a color parameter. Then I'll adjust the background to use ColorToARGB with black at alpha 128. For empty lines, I'll either show them with minimal height or skip them entirely, since the user wants spacing between lines and empty content already adds extra line slots. I'll implement the color logic for different line types: gold for headers, light blue for symbol lines, very dim color or skip for empty lines, orange for SIDEWAY, green for TRENDING/XU HNG, and gray-blue for range/bin pip.</details></think>
+
+_**Agent (default)**_
+
+Đang cập nhật panel: tăng khoảng cách dòng, màu theo loại nội dung, nền đen 50% opacity.
+
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: $me = "C:\Program Files\MetaTrader 5\MetaEditor64.exe"; $src = "C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5"; $log = "C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade_compile.log"; & $me /compile:$src /log:$log; Start-Sleep -Seconds 4; Select-String -Path $log -Pattern "error|Result"</summary>
+
+```bash
+$me = "C:\Program Files\MetaTrader 5\MetaEditor64.exe"; $src = "C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5"; $log = "C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade_compile.log"; & $me /compile:$src /log:$log; Start-Sleep -Seconds 4; Select-String -Path $log -Pattern "error|Result"
+```
+
+```
+
+mq5\Hybrid_LSTM_TA_SidewayMartTrade_compile.log:49:Result: 0 errors, 2 warnings, 2248 ms elapsed, cpu='X64 Regular'
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot\\mq5\\Hybrid_LSTM_TA_SidewayMartTrade_compile.log",
+  "pattern": "warning"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot\\mq5\\Hybrid_LSTM_TA_SidewayMartTrade_compile.log",
+  "pattern": "warning",
+  "topFiles": [
+    {
+      "matchCount": 3,
+      "uri": "mq5\\Hybrid_LSTM_TA_SidewayMartTrade_compile.log"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 3
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The assistant identified a warning related to alpha casting and resolved it by explicitly casting alpha to uchar.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: & "C:\Program Files\MetaTrader 5\MetaEditor64.exe" /compile:"C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5" /log:"C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade_compile.log"; Start-Sleep -Seconds 3; Select-String -Path "C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade_compile.log" -Pattern "Result"</summary>
+
+```bash
+& "C:\Program Files\MetaTrader 5\MetaEditor64.exe" /compile:"C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5" /log:"C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade_compile.log"; Start-Sleep -Seconds 3; Select-String -Path "C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade_compile.log" -Pattern "Result"
+```
+
+```
+
+mq5\Hybrid_LSTM_TA_SidewayMartTrade_compile.log:47:Result: 0 errors, 0 warnings, 2349 ms elapsed, cpu='X64 Regular'
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+Đã cập nhật panel trong `Hybrid_LSTM_TA_SidewayMartTrade.mq5` (compile 0 lỗi).
+
+### Thay đổi
+
+1. **Khoảng cách dòng** — `InpPanelLineGap` (mặc định **12** pixel, cộng vào cỡ chữ). Tăng lên 16–18 nếu muốn thoáng hơn.
+
+2. **Màu từng dòng** (theo nội dung):
+   - Tiêu đề: vàng gold  
+   - Symbol/TF: xanh nhạt  
+   - Sideway / xu hướng: cam / xanh lá  
+   - LONG / SHORT / NEUTRAL: xanh / đỏ / vàng  
+   - Basket, P+L lãi/lỗ, TP, SL: màu riêng  
+   - Dòng khác: xen kẽ 4 tông nhạt  
+
+3. **Nền đen 50%** — `ColorToARGB(clrBlack, 128)` qua `InpPanelBgOpacity` (mặc định **50**; 0 = trong suốt, 100 = đen đặc).
+
+Gắn lại EA hoặc F7 compile rồi refresh chart để thấy nền mờ và màu dòng mới.
+
+---
+
+_**User**_
+
+các log thông báo và ui text cần quy đổi các giá trị % hoặc tham số nhân thành giá trị thông báo rõ ràng
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The user wants log messages and UI panel text to convert percentage values or multiplier parameters into clear, readable values in notifications.</details></think>
+
+_**Agent (default)**_
+
+Đang rà soát toàn bộ log và text panel để quy đổi %/hệ số thành giá trị cụ thể (lot, $, pip…).
+
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot\\mq5\\Hybrid_LSTM_TA_SidewayMartTrade.mq5",
+  "pattern": "Print\\(|L\\(|t \\+=|LogLeg|LogExit|DoubleToString\\(Inp"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot\\mq5\\Hybrid_LSTM_TA_SidewayMartTrade.mq5",
+  "pattern": "Print\\(|L\\(|t \\+=|LogLeg|LogExit|DoubleToString\\(Inp",
+  "topFiles": [
+    {
+      "matchCount": 82,
+      "uri": "mq5\\Hybrid_LSTM_TA_SidewayMartTrade.mq5"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 82
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+I need to add helper functions to format concrete values.
+
+`FmtMoney(cur, amount)` formats money with currency.  
+`FmtLot(vol)` formats lot size.  
+`FmtPctOfRef(pct, refMoney, cur)` returns "X% (= Y USD)".  
+`FmtPlannedLotFromBase(baseLot, mult)` displays "0.011 lot (mi 0.01  1.1)".  
+`FmtBasketRefLine()` explains notional reference.  
+`FmtAccountThreshold(pct, balance)` shows dollar amount.
+
+For panels without baskets, display planned lots:  
+Mi: InpFirstLot  
+Nhi #2: NormalizeVolumeLocal(InpFirstLot * mult)  
+Nhi #3: NormalizeVolumeLocal(InpFirstLot * mult * mult)  
+Quay u: NormalizeVolumeLocal(InpFirstLot * reversal)
+
+For TP/SL calculations without baskets but with defaults, estimate notional using current price when no position:
+```cpp
+double EstimateBaitNotional(const double lot, const double price) {
+  return MathAbs(lot * contract * price);
+}
+```
+
+Helper functions for formatting monetary values:
+```cpp
+string FmtCurMoney(const double amount) {
+  const string cur = AccountInfoString(ACCOUNT_CURRENCY);
+  return DoubleToString(amount, 2) + " " + cur;
+}
+
+string FmtPctMoney(const double pct, const double refMoney) {
+  const double usd = refMoney * pct / 100.0;
+  return DoubleToString(pct, 1) + "% = " + FmtCurMoney(usd);
+}
+```
+
+double EstimateNotionalFromLot calculates notional value based on lot size and current price.  
+FmtLotChain formats lot chains with multipliers, though it needs correction for leg2 calculation.  
+Leg1 should use the normalized InpFirstLot value.
+
+Leg2 planned lot equals Leg1 multiplied by the martingale multiplier, with Leg1 being the initial lot size. Leg3 uses the same multiplier applied to Leg2s volume, effectively calculating as first lot times the square of the multiplier. The function `FmtLotMult` formats this relationship by showing the original lot, multiplier, and resulting normalized lot.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+I'll add helper functions after NormalizeVolumeLocal and before UiTruncate.
+
+Then update all the message sites.
+
+Helper functions:
+string FmtMoney(const double amount) {
+  return DoubleToString(amount, 2) + " " + AccountInfoString(ACCOUNT_CURRENCY);
+}
+
+string FmtPctToMoney(const double pct, const double refMoney) {
+  if (refMoney <= 0.0) return DoubleToString(pct, 1) + "%";
+  return DoubleToString(pct, 1) + "% (= " + FmtMoney(refMoney * pct / 100.0) + ")";
+}
+
+double MarketPriceForEstimate() {
+  double px = SymbolInfoDouble(_Symbol, SYMBOL_BID);
+  if (px <= 0.0) px = SymbolInfoDouble(_Symbol, SYMBOL_ASK);
+
+if (px <= 0.0) px = SymbolInfoDouble(_Symbol, SYMBOL_LAST);
+if (px <= 0.0) px = iClose(_Symbol, _Period, 0);
+return px;
+
+double NotionalFromLotPrice(const double lot, const double openPrice) {
+  if (lot <= 0 || openPrice <= 0) return 0;
+  const double cs = SymbolInfoDouble(_Symbol, SYMBOL_TRADE_CONTRACT_SIZE);
+  const double n = MathAbs(lot * cs * openPrice);
+  if (n > 0 && MathIsValidNumber(n)) return n;
+  double margin = 0;
+  ENUM_ORDER_TYPE ot = ORDER_TYPE_BUY;
+  if (OrderCalcMargin(ot, _Symbol, lot, openPrice, margin) && margin > 0) return margin;
+  return 0;
+}
+
+I'll add helper functions after NormalizeVolumeLocal and before UiTruncate, then update all the message sites.
+
+The helper functions include:
+- FmtMoney: formats monetary amounts with currency
+- FmtPctToMoney: converts percentages to monetary values
+- MarketPriceForEstimate: gets market price from various sources
+- NotionalFromLotPrice: calculates notional value from lot size and price
+
+The BaitRefMoneyEstimate function uses these helpers to calculate reference money for baiting strategies.
+
+The FmtLotFromMult function formats lots based on multipliers.
+
+return DoubleToString(baseLot, 2) + "  " + DoubleToString(mult, 2) + " = " + DoubleToString(raw, 4) + "  " + DoubleToString(norm, 2) + " lot (chun ha)";
+
+string FmtLotPlanLineVi() {
+  const double lot1 = NormalizeVolumeLocal(InpFirstLot);
+  const double lot2 = NormalizeVolumeLocal(lot1 * InpMartingaleMult);
+  const double lot3 = NormalizeVolumeLocal(lot2 * InpMartingaleMult);
+  const double lotR = NormalizeVolumeLocal(lot1 * InpReversalMult);
+
+}
+
+Return "Lot: bait " + DoubleToString(lot1,2) + " | fill " + DoubleToString(lot2,2) + ", " + DoubleToString(lot3,2) + " | reverse " + DoubleToString(lotR,2);
+
+When no basket, g_basketTpMoney is 0use estimate reference.
+
+string FmtSidewayLine() formats sideways range with pips and price range in points, such as "Bin 3.2 pip (= 0.32 gi) / ngng 8.0 pip".
+
+For hybrid probabilities, percentages are sufficient, but adding "up 62.3% = LONG bias" provides clarity as requested.
+
+For panel P+L lines with TP:
+```
+
+t += L(" TP mc ", " TP target ") + FmtMoney(g_basketTpMoney) + L(" (", " (") + FmtPctToMoney(InpBasketTakeProfitPct, g_basketRefMoney) + L(", ref mi ", ", bait ref ") + FmtMoney(g_basketRefMoney) + ")\n";
+t += L(" cn thm ", " need ") + FmtMoney(...) + L("  cht\n", " to close\n");
+
+For account thresholds when basket open:
+if (InpAccountTakeProfitPct > 0 && g_balanceAtBasketOpen > 0)
+  t += L("TK cht li: ", "Acct TP: ") + FmtMoney(g_balanceAtBasketOpen * InpAccountTakeProfitPct/100) + L(" (", "(") + FmtPctToMoney(...) + " balance " + FmtMoney
+
+Update LogLegOpen to include optional fromLot and mult for auto reason, or modify calls to use FmtLotFromMult in reason strings.  
+FmtLotMultShort provides a concise format for logging lots and multipliers.  
+Rewrite CheckCloseRules messages using FmtPctToMoney and explicit dollar thresholds.  
+In TryOpenFirstFromSignal, print locked TP/SL with full breakdown.  
+Sideway log formatting remains unchanged.</details></think>
+
+_**Agent (default)**_
+
+Thêm hàm format giá trị cụ thể và cập nhật toàn bộ log + panel.
+
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
 Status: **loading**
 
 </details>
