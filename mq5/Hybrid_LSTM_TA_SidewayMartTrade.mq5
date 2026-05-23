@@ -25,6 +25,7 @@ input int    InpSlippagePoints = 30;       // Trượt giá tối đa (point) kh
 input double InpFirstLot = 0.01;             // Lot lệnh đầu (mồi) theo tín hiệu Hybrid
 input double InpMartingaleMult = 1.1;        // Hệ số nhồi cùng chiều: lot mới = lot leg trước × hệ số (mặc định 1.1)
 input double InpReversalMult = 5.0;          // Hệ số quay đầu: lot ngược = lot mồi × hệ số (mặc định 5)
+input double InpMartingaleAdversePips = 20.0; // Pip lỗ (bất lợi) tối thiểu so với giá vào leg đang theo dõi để nhồi hoặc quay đầu; 0=chỉ cần leg âm P+L
 
 input group "=== Chốt lời / cắt lỗ basket (theo % giá trị lệnh mồi) ==="
 input double InpBasketTakeProfitPct = 10.0;  // Chốt lời: đóng tất cả khi P+L ròng ≥ ref$ × %/100 (ref = |lot_mồi×contract×giá_mồi|)
@@ -153,6 +154,46 @@ string FmtLotPlanLine() {
            DoubleToString(lotRev, 2);
 }
 
+string FmtMartingalePipRule() {
+    if (InpMartingaleAdversePips <= 0.0)
+        return L("Điều kiện nhồi/quay đầu: leg cuối P+L < 0 (không yêu cầu pip)",
+                   "Add/reversal: latest leg P+L < 0 (no pip filter)");
+    return L("Điều kiện nhồi/quay đầu: leg lỗ + giá ngược ≥ ", "Add/reversal: losing leg + adverse ≥ ") +
+           DoubleToString(InpMartingaleAdversePips, 1) + L(" pip so giá vào leg đó", " pip vs that leg entry");
+}
+
+double CurrentAdversePips(const bool basketBuy, const double openPrice) {
+    if (openPrice <= 0.0)
+        return 0.0;
+    const double pip = PipSizeLocal();
+    if (pip <= 0.0)
+        return 0.0;
+    const double bid = SymbolInfoDouble(_Symbol, SYMBOL_BID);
+    const double ask = SymbolInfoDouble(_Symbol, SYMBOL_ASK);
+    if (basketBuy) {
+        if (bid <= 0.0)
+            return 0.0;
+        return MathMax(0.0, (openPrice - bid) / pip);
+    }
+    if (ask <= 0.0)
+        return 0.0;
+    return MathMax(0.0, (ask - openPrice) / pip);
+}
+
+bool IsMartingaleAdversePipsHit(const bool basketBuy, const double refOpen, double& outAdversePips) {
+    outAdversePips = CurrentAdversePips(basketBuy, refOpen);
+    if (InpMartingaleAdversePips <= 0.0)
+        return true;
+    return (outAdversePips >= InpMartingaleAdversePips);
+}
+
+string FmtAdversePipsStatus(const double adversePips) {
+    if (InpMartingaleAdversePips <= 0.0)
+        return L("pip bất lợi: bỏ qua (input=0)", "adverse pip: n/a (input=0)");
+    return L("pip bất lợi ", "adverse ") + DoubleToString(adversePips, 1) + L(" / cần ", " / need ") +
+           DoubleToString(InpMartingaleAdversePips, 1);
+}
+
 string FmtSidewayRangeDetail() {
     const double pip = PipSizeLocal();
     const int dig = (int)SymbolInfoInteger(_Symbol, SYMBOL_DIGITS);
@@ -269,6 +310,9 @@ color UiPanelColorForLine(const string text, const int lineIdx) {
     if (UiPanelTextHas(text, "Biên đo") || UiPanelTextHas(text, "Measured "))
         return C'175,185,205';
 
+    if (UiPanelTextHas(text, "Điều kiện nhồi") || UiPanelTextHas(text, "Add/reversal"))
+        return C'255,200,140';
+
     if (UiPanelTextHas(text, "Kế hoạch lot") || UiPanelTextHas(text, "Lot plan") || UiPanelTextHas(text, "Chốt lời basket") ||
         UiPanelTextHas(text, "Basket TP") || UiPanelTextHas(text, "Cắt lỗ basket") || UiPanelTextHas(text, "Basket SL") ||
         UiPanelTextHas(text, "TK chốt") || UiPanelTextHas(text, "Acct TP") || UiPanelTextHas(text, "TK cắt") || UiPanelTextHas(text, "Acct SL"))
@@ -384,6 +428,7 @@ void UiPanelUpdate() {
     t += L("Cửa sổ ", "Window ") + IntegerToString(InpSidewayWindowSec) + L(" giây · mẫu mỗi ", " sec · sample every ");
     t += IntegerToString(InpSidewaySampleSec) + L(" giây\n", " sec\n");
     t += FmtLotPlanLine() + "\n";
+    t += FmtMartingalePipRule() + "\n";
     t += FmtBasketTpExplain(false) + "\n";
     t += FmtBasketSlExplain(false) + "\n";
     if (StringLen(FmtAccountTpExplain()) > 0)
@@ -452,6 +497,11 @@ void UiPanelUpdate() {
             if (PositionSelectByTicket(lt))
                 lp = PositionGetDouble(POSITION_PROFIT) + PositionGetDouble(POSITION_SWAP);
             t += L("Leg cuối P+L: ", "Latest leg P+L: ") + FmtMoney(lp) + "\n";
+            double refLegOpen = lop;
+            if (!LatestSameDirectionOpenPrice(g_basketBuy, refLegOpen) || refLegOpen <= 0.0)
+                refLegOpen = lop;
+            const double adv = CurrentAdversePips(g_basketBuy, refLegOpen);
+            t += FmtAdversePipsStatus(adv) + L(" (theo dõi nhồi/quay đầu)\n", " (martingale trigger)\n");
         }
         t += L("Vị thế EA: ", "EA positions: ") + IntegerToString(nPos) + "\n";
     }
@@ -600,6 +650,30 @@ bool LatestSameDirectionVolume(const bool basketBuy, double& outVol) {
         }
     }
     return (outVol > 0.0);
+}
+
+bool LatestSameDirectionOpenPrice(const bool basketBuy, double& outOpen) {
+    outOpen = 0.0;
+    datetime newest = 0;
+    for (int i = PositionsTotal() - 1; i >= 0; i--) {
+        const ulong ticket = PositionGetTicket(i);
+        if (ticket == 0 || !PositionSelectByTicket(ticket))
+            continue;
+        if (PositionGetString(POSITION_SYMBOL) != _Symbol)
+            continue;
+        if ((ulong)PositionGetInteger(POSITION_MAGIC) != InpMagic)
+            continue;
+        const long typ = PositionGetInteger(POSITION_TYPE);
+        const bool legBuy = (typ == POSITION_TYPE_BUY);
+        if (basketBuy != legBuy)
+            continue;
+        const datetime ot = (datetime)PositionGetInteger(POSITION_TIME);
+        if (newest == 0 || ot >= newest) {
+            newest = ot;
+            outOpen = PositionGetDouble(POSITION_PRICE_OPEN);
+        }
+    }
+    return (outOpen > 0.0);
 }
 
 bool OldestOurPosition(ulong& ticket, double& openPrice, datetime& openTime, long& posType) {
@@ -925,6 +999,21 @@ void ManageMartingaleSequence() {
         return;
     }
 
+    double refOpen = lastOp;
+    if (!LatestSameDirectionOpenPrice(g_basketBuy, refOpen) || refOpen <= 0.0)
+        refOpen = lastOp;
+    if (refOpen <= 0.0)
+        refOpen = g_firstOpenPrice;
+
+    double adversePips = 0.0;
+    if (!IsMartingaleAdversePipsHit(g_basketBuy, refOpen, adversePips)) {
+        return;
+    }
+
+    const int dig = (int)SymbolInfoInteger(_Symbol, SYMBOL_DIGITS);
+    const string pipNote = FmtAdversePipsStatus(adversePips) + L(" · giá vào leg ", " · leg entry @ ") +
+                           DoubleToString(refOpen, dig);
+
     const int nSame = CountSameDirectionLegs(g_basketBuy);
     const int nOpp = CountOppositeLegs(g_basketBuy);
     const double vmin = SymbolInfoDouble(_Symbol, SYMBOL_VOLUME_MIN);
@@ -941,9 +1030,9 @@ void ManageMartingaleSequence() {
         if (vol >= vmin && OpenMarket(t, vol, "HSSW_ADD1")) {
             g_addStage = 1;
             LogLegOpen("lệnh nhồi #2", "martingale leg #2", t, vol,
-                       L("Leg mồi đang lỗ — nhồi cùng chiều: ", "Bait leg losing — same-dir add: ") +
-                           FmtLotMultResult(prevVol, InpMartingaleMult, vol),
-                       FmtLotMultResult(prevVol, InpMartingaleMult, vol));
+                       L("Leg mồi lỗ đủ pip — nhồi: ", "Bait leg loss pip OK — add: ") + FmtLotMultResult(prevVol, InpMartingaleMult, vol) +
+                           ". " + pipNote,
+                       FmtLotMultResult(prevVol, InpMartingaleMult, vol) + ". " + pipNote);
         }
         return;
     }
@@ -957,9 +1046,9 @@ void ManageMartingaleSequence() {
         if (vol >= vmin && OpenMarket(t, vol, "HSSW_ADD2")) {
             g_addStage = 2;
             LogLegOpen("lệnh nhồi #3", "martingale leg #3", t, vol,
-                       L("Leg #2 vẫn lỗ — nhồi tiếp: ", "Leg #2 still losing — add: ") +
-                           FmtLotMultResult(prevVol, InpMartingaleMult, vol),
-                       FmtLotMultResult(prevVol, InpMartingaleMult, vol));
+                       L("Leg #2 lỗ đủ pip — nhồi: ", "Leg #2 loss pip OK — add: ") + FmtLotMultResult(prevVol, InpMartingaleMult, vol) +
+                           ". " + pipNote,
+                       FmtLotMultResult(prevVol, InpMartingaleMult, vol) + ". " + pipNote);
         }
         return;
     }
@@ -970,9 +1059,9 @@ void ManageMartingaleSequence() {
         if (vol >= vmin && OpenMarket(t, vol, "HSSW_REV")) {
             g_addStage = 3;
             LogLegOpen("lệnh quay đầu", "reversal leg", t, vol,
-                       L("Sau 3 leg cùng chiều vẫn lỗ — quay đầu: ", "After 3 same-dir legs still losing — reversal: ") +
-                           FmtLotMultResult(g_firstLot, InpReversalMult, vol),
-                       FmtLotMultResult(g_firstLot, InpReversalMult, vol));
+                       L("3 leg cùng chiều lỗ đủ pip — quay đầu: ", "3 same-dir legs loss pip OK — reversal: ") +
+                           FmtLotMultResult(g_firstLot, InpReversalMult, vol) + ". " + pipNote,
+                       FmtLotMultResult(g_firstLot, InpReversalMult, vol) + ". " + pipNote);
         }
     }
 }
@@ -1101,6 +1190,10 @@ int OnInit() {
     }
     if (InpReversalMult <= 0.0) {
         Print(L("InpReversalMult phải > 0.", "InpReversalMult must be > 0."));
+        return INIT_PARAMETERS_INCORRECT;
+    }
+    if (InpMartingaleAdversePips < 0.0) {
+        Print(L("InpMartingaleAdversePips không được âm.", "InpMartingaleAdversePips must be >= 0."));
         return INIT_PARAMETERS_INCORRECT;
     }
     if (InpBasketTakeProfitPct <= 0.0) {

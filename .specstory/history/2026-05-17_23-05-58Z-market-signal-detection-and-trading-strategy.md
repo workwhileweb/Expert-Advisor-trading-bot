@@ -1536,7 +1536,20 @@ _**Agent (default)**_
 
 <details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
 
-Status: **loading**
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
 
 </details>
 
@@ -1546,3 +1559,725 @@ Status: **loading**
 <summary>Tool use: **edit_file_v2**</summary>
 
 </details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot\\mq5\\Hybrid_LSTM_TA_SidewayMartTrade.mq5",
+  "pattern": "const string cur"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot\\mq5\\Hybrid_LSTM_TA_SidewayMartTrade.mq5",
+  "pattern": "const string cur",
+  "topFiles": [
+    {
+      "matchCount": 2,
+      "uri": "mq5\\Hybrid_LSTM_TA_SidewayMartTrade.mq5"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 2
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: & "C:\Program Files\MetaTrader 5\MetaEditor64.exe" /compile:"C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5" /log:"C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade_compile.log"; Start-Sleep -Seconds 4; Select-String -Path "C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade_compile.log" -Pattern "error|warning|Result"</summary>
+
+```bash
+& "C:\Program Files\MetaTrader 5\MetaEditor64.exe" /compile:"C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5" /log:"C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade_compile.log"; Start-Sleep -Seconds 4; Select-String -Path "C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade_compile.log" -Pattern "error|warning|Result"
+```
+
+```
+
+mq5\Hybrid_LSTM_TA_SidewayMartTrade_compile.log:47:Result: 0 errors, 0 warnings, 3231 ms elapsed, cpu='X64 Regular'
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+Đã cập nhật log và panel: mọi **%** và **hệ số nhân** đều kèm **giá trị quy đổi cụ thể**.
+
+### Quy ước hiển thị
+- **Tiền:** `10.50 USD` (FmtMoney)
+- **% + tiền:** `10% (= 125.40 USD)` (FmtPctAndMoney)
+- **Lot nhân:** `0.01 lot × 1.1 → 0.01 lot (chuẩn hóa)`
+- **Sideway:** pip **và** biên quy ra **giá** (vd. `3.2 pip (0.32 giá) · ngưỡng ≤ 8.0 pip (0.80 giá)`)
+
+### Panel (luôn thấy khi chờ lệnh)
+- Kế hoạch lot: mồi `0.01` | nhồi `0.01`, `0.01` | quay đầu `0.05`
+- Chốt lời basket: mốc `X USD` `(10% (= X USD), ref mồi Y USD)`
+- Cắt lỗ / TK (nếu bật): ngưỡng **bằng số tiền**, kèm %
+
+### Khi có basket
+- Giá trị mồi (ref), mốc TP/SL đầy đủ
+- `→ cần thêm 4.20 USD để chạm TP mốc 12.50 USD`
+
+### Log Experts
+- Mở mồi: lot + **giá trị ref** + mốc TP/SL khóa (tiền + %)
+- Nhồi / quay đầu: `0.01 × 1.1 → 0.01 lot` thay vì chỉ “× 1.1”
+- Đóng basket / TK: so sánh P+L với **mốc $** rõ ràng
+
+Compile: **0 lỗi**. Gắn lại EA để thấy text mới trên chart và tab Experts.
+
+---
+
+_**User**_
+
+bổ sung thêm tham số : số pip (mặc định = 20) lỗ để đánh lệnh nhồi tiếp theo hoặc đánh lệnh quay đầu
+
+---
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The user wants to add a pip loss threshold parameter to determine when to place the next martingale add or reversal order.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+I need to add InpMartingaleAdversePips = 20.
+
+Add InpMartingaleAdversePips = 20 with clear comment. Implement helper function to detect adverse pips from reference open price based on basket direction: for BUY legs, adverse condition is bid <= openPrice - pips * pip; for SELL legs, adverse is ask >= openPrice + pips * pip. Apply same logic for reversal scenarios using the latest same-direction leg (leg 3) or first leg, maintaining consistent thresholds for both cases. Use latest leg as reference price for each stage, where stage 0 and nSame==1 uses lastOp from LatestOurPosition or latest same-direction open as the reference.
+
+- Add reference to the latest same-direction leg open (leg 2) for stage 2.
+- For reversals, use the latest same-direction leg (leg 3) as reference if applicable.
+- When g_addStage == 2 and nSame >= 3, ensure the latest position is considered for same-direction legs.
+- Include adverse pips check alongside lastLegPnl < 0.
+- Helper function to detect adverse pips using the latest same-direction leg's open price.
+
+double AdversePipsFromOpen(const bool basketBuy, const double openPrice) {
+  const double pip = PipSizeLocal();
+  const double dist = InpMartingaleAdversePips * pip;
+  const double bid = SymbolInfoDouble(_Symbol, SYMBOL_BID);
+  const double ask = SymbolInfoDouble(_Symbol, SYMBOL_ASK);
+  if (basketBuy)
+    return (openPrice - bid) / pip; // positive if price went down (adverse for buy)
+  else
+    return (ask - openPrice) / pip; // positive if price went up (adverse for sell)
+}
+
+bool IsAdversePipsEnough(const bool basketBuy, const double openPrice) {
+  const double adversePips = AdversePipsFromOpen(basketBuy, openPrice);
+  return adversePips >= InpMartingaleAdversePips;
+}</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot\\mq5\\Hybrid_LSTM_TA_SidewayMartTrade.mq5",
+  "pattern": "LatestSameDirection"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot\\mq5\\Hybrid_LSTM_TA_SidewayMartTrade.mq5",
+  "pattern": "LatestSameDirection",
+  "topFiles": [
+    {
+      "matchCount": 3,
+      "uri": "mq5\\Hybrid_LSTM_TA_SidewayMartTrade.mq5"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 3
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search">
+<details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+
+Parameters:
+
+```json
+{
+  "caseInsensitive": false,
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot\\mq5\\Hybrid_LSTM_TA_SidewayMartTrade.mq5",
+  "pattern": "FmtLotPlanLine|OnInit"
+}
+```
+Additional data:
+
+```json
+{
+  "isPruned": true,
+  "outputMode": "content",
+  "path": "C:\\Users\\workw\\Downloads\\git\\Expert-Advisor-trading-bot\\mq5\\Hybrid_LSTM_TA_SidewayMartTrade.mq5",
+  "pattern": "FmtLotPlanLine|OnInit",
+  "topFiles": [
+    {
+      "matchCount": 3,
+      "uri": "mq5\\Hybrid_LSTM_TA_SidewayMartTrade.mq5"
+    }
+  ],
+  "totalFiles": 1,
+  "totalMatches": 3
+}
+```
+Status: **completed**
+
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="unknown" data-tool-name="ripgrep_raw_search"><details>
+<summary>Tool use: **ripgrep_raw_search**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+I need to implement a LatestSameDirectionOpenPrice function following the pattern of SignalTrade.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2">
+<details><summary>Tool use: **read_file_v2** • Read file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+</tool-use>
+
+<tool-use data-tool-type="read" data-tool-name="read_file_v2"><details>
+<summary>Tool use: **read_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+The function `LatestSameDirectionOpenPrice` determines if there's an open position in the same direction as the basket buy and returns the opening price. It initializes `outOpen` to zero and iterates through positions to find the newest one matching the criteria, setting `outOpen` to the position's open price if found.
+
+The helper function `CurrentAdversePips` calculates the adverse pip distance between the current market price and the open price of a position. It first checks that both the open price and pip size are valid, then retrieves the bid and ask prices to compute the adverse pips.
+
+The function `IsMartingaleAdversePipsHit` evaluates whether the adverse pip distance meets or exceeds the martingale threshold, returning true if the condition is met. The `FmtAdversePipsLine` function formats the adverse pip line, though its implementation is not provided.
+
+The function returns a formatted string showing the adverse pip distance versus the martingale threshold. The `ManageMartingaleSequence` flow checks for negative PnL and uses the latest same-direction open price for each stage, with special handling for stages 0 and 1 where `lastOp` is used, and stage 2 where `LatestSameDirectionOpenPrice` is applied. For stage 0, `nSame==1` and `lastOp` is correct since the latest is the bait. For stage 1, `nSame==2` and `lastOp` is also correct since the latest is leg 2.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2">
+
+<details><summary>Tool use: **edit_file_v2** • Edit file: C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5</summary>
+
+</details>
+
+</tool-use>
+
+<tool-use data-tool-type="write" data-tool-name="edit_file_v2"><details>
+<summary>Tool use: **edit_file_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+<think><details><summary>Thought Process</summary>
+In MQL5, functions can be called in any order as long as they exist, but in the panel basket section, LatestSameDirectionOpenPrice is referenced before its definition in the file.
+
+LatestSameDirectionOpenPrice is defined before UiPanelUpdate uses it, but UiPanelUpdate is placed before LatestSameDirectionOpenPrice in the file. In MQL5, function order does not matter since all functions are visible. This is acceptable and confirmed by compilation.
+
+Note: UiPanelUpdate calls LatestSameDirectionOpenPrice, which is defined later, but this is allowed in MQL5.</details></think>
+
+_**Agent (default)**_
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2">
+<details><summary>Tool use: **run_terminal_command_v2** • Run command: & "C:\Program Files\MetaTrader 5\MetaEditor64.exe" /compile:"C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5" /log:"C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade_compile.log"; Start-Sleep -Seconds 4; Select-String -Path "C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade_compile.log" -Pattern "error|Result"</summary>
+
+```bash
+& "C:\Program Files\MetaTrader 5\MetaEditor64.exe" /compile:"C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade.mq5" /log:"C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade_compile.log"; Start-Sleep -Seconds 4; Select-String -Path "C:\Users\workw\Downloads\git\Expert-Advisor-trading-bot\mq5\Hybrid_LSTM_TA_SidewayMartTrade_compile.log" -Pattern "error|Result"
+```
+
+```
+
+mq5\Hybrid_LSTM_TA_SidewayMartTrade_compile.log:47:Result: 0 errors, 0 warnings, 2952 ms elapsed, cpu='X64 Regular'
+
+```
+</details>
+</tool-use>
+
+<tool-use data-tool-type="shell" data-tool-name="run_terminal_command_v2"><details>
+<summary>Tool use: **run_terminal_command_v2**</summary>
+
+</details></tool-use>
+
+_**Agent (default)**_
+
+Đã bổ sung tham số **`InpMartingaleAdversePips`** (mặc định **20**).
+
+### Cách hoạt động
+Để **nhồi #2 / #3** hoặc **quay đầu**, cần **đủ cả hai**:
+1. Leg cuối đang theo dõi có **P+L < 0**
+2. Giá đi **ngược** so với giá vào leg đó ≥ **20 pip** (BUY: giá giảm; SELL: giá tăng)
+
+Mốc pip tính từ **giá mở leg cùng chiều mới nhất** (leg đang lỗ).
+
+### Input mới
+```mq5
+InpMartingaleAdversePips = 20.0  // 0 = chỉ cần leg âm P+L, không lọc pip
+```
+
+### Panel & log
+- Dòng: `Điều kiện nhồi/quay đầu: leg lỗ + giá ngược ≥ 20.0 pip so giá vào leg đó`
+- Khi có basket: `pip bất lợi 12.3 / cần 20.0`
+- Khi mở nhồi/quay đầu: log kèm `pip bất lợi 21.2 / cần 20.0 · giá vào leg 2650.50`
+
+Compile: **0 lỗi**. Gắn lại EA để áp dụng.
